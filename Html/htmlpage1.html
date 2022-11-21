@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>Первая страница</title>
+</head>
+<body>
+    <header>
+        <h1><ins>Заполните анкету!</ins></h1>
+    </header>
+    <main>
+        <form method="post" action="/myProfile.php">
+            <label for="textForName"><strong>Введите ваше имя: </strong></label>
+            <input id="textForName" type="text" placeholder="введите ваше имя" name="textForName" />
+            <br />
+            <br />
+
+            <label for="textForLastName"><strong>Введите вашу фамилию: </strong></label>
+            <input id="textForLastName" type="text" placeholder="введите вашу фамилию" name="textForLastName" />
+            <br />
+            <br />
+
+            <label for="textareaForAdditionalInformation"><strong>Напишите о себе: </strong></label>
+            <textarea id="textareaForAdditionalInformation" placeholder="Напишите о себе" name="textareaForAdditionalInformation"></textarea>
+            <br />
+            <br />
+
+            <label>
+                <strong>Укажите ваш пол</strong>
+                <br />
+                <label for="radioMale">мужской: </label>
+                <input id="radioMale" type="radio" value="male" name="gender" />
+                <br />
+                <label for="radioFemale">женский: </label>
+                <input id="radioFemale" type="radio" value="female" name="gender" checked="checked" />
+            </label>
+            <br />
+            <br />
+
+            <label><strong>Имеете ли вы вредные привычки?</strong></label>
+            <br />
+            <label for="smoke">Не курю: </label>
+            <input id="smoke" type="checkbox" value="true" name="checkBoxSmoke" checked="checked" />
+            <br />
+            <label for="drink">Не пью: </label>
+            <input id="drink" type="checkbox" value="false" name="checkBoxDrink" />
+            <br />
+            <br />
+
+            <label><strong>Выберите вашу профессию из списка: </strong></label>
+            <select id="selectMajor" size="1" name="selectMajor">
+                <optgroup label="Управляющий персонал">
+                    <option value="projectManager">Менеджер проекта</option>
+                    <option value="teamLead">Team lead</option>
+                </optgroup>
+                <optgroup label="Разработчики">
+                    <option value="qualityAssurance">Тестировщик</option>
+                    <option value="systemAnalyst">Системный аналитик</option>
+                    <option value="programmer" selected="selected">Программист</option>
+                    <option value="technicalWriter">Технический писатель</option>
+                    <option value="designer">Дизайнер</option>
+                </optgroup>
+                <optgroup label="Вспомогательный персонал">
+                    <option value="humanResources">HR</option>
+                    <option value="systemAdministrator">Системный администратор</option>
+                </optgroup>
+            </select>
+            <br />
+            <br />
+
+            <label><strong>Выберите ваше хобби из списка:</strong></label>
+            <select id="selectHobby" size="3" multiple="multiple" name="selectHobby">
+                <option value="reading">Чтение</option>
+                <option value="movies">Фильмы</option>
+                <option value="programming">Программирование</option>
+                <option value="myrmicology" selected="selected">Мирмикология</option>
+                <option value="scientificBroadcasts">Научные передачи</option>
+                <option value="philately">Филателия</option>
+            </select>
+            <br />
+            <br />
+
+            <input id="submitData" type="submit" value="Отправить" name="submitData" />
+        </form>
+        <br />
+        <br />
+
+        <a href="htmlpage2.html" target="_self">Следующая страница</a>
+    </main>
+</body>
+</html>
