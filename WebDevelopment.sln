@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Html", "Html\Html.csproj", "{637EF351-C6C0-4143-8E56-79C3E50EC521}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Html", "Html\Html.csproj", "{637EF351-C6C0-4143-8E56-79C3E50EC521}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSSText", "CSSText\CSSText.csproj", "{65283317-787B-48E9-89D5-F8B9A79446D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{637EF351-C6C0-4143-8E56-79C3E50EC521}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{637EF351-C6C0-4143-8E56-79C3E50EC521}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{637EF351-C6C0-4143-8E56-79C3E50EC521}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65283317-787B-48E9-89D5-F8B9A79446D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65283317-787B-48E9-89D5-F8B9A79446D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65283317-787B-48E9-89D5-F8B9A79446D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65283317-787B-48E9-89D5-F8B9A79446D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

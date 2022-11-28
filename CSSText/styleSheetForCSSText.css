@@ -1,0 +1,27 @@
+﻿html {
+    font-size: 19px;
+    font-family: Arial;
+}
+
+body {
+    background-color: black;
+}
+
+.serviceHeader {
+    font-size: 32px;
+    line-height: 1.1;
+}
+
+.serviceElement strong {
+    color: #378FB4;
+}
+
+.service {
+    width: 849px;
+    height: 464px;
+    background: #FEEED6;
+}
+
+.serviceText {
+    text-indent: 19px;
+}
