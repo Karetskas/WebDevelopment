@@ -10,45 +10,43 @@
     </header>
     <main>
         <form method="post" action="/myProfile.php">
-            <label for="textForName"><strong>Введите ваше имя: </strong></label>
-            <input id="textForName" type="text" placeholder="введите ваше имя" name="textForName" />
+            <label for="text_for_name"><strong>Введите ваше имя: </strong></label>
+            <input id="text_for_name" type="text" placeholder="введите ваше имя" name="textForName" />
             <br />
             <br />
 
-            <label for="textForLastName"><strong>Введите вашу фамилию: </strong></label>
-            <input id="textForLastName" type="text" placeholder="введите вашу фамилию" name="textForLastName" />
+            <label for="text_for_last_name"><strong>Введите вашу фамилию: </strong></label>
+            <input id="text_for_last_name" type="text" placeholder="введите вашу фамилию" name="textForLastName" />
             <br />
             <br />
 
-            <label for="textareaForAdditionalInformation"><strong>Напишите о себе: </strong></label>
-            <textarea id="textareaForAdditionalInformation" placeholder="Напишите о себе" name="textareaForAdditionalInformation"></textarea>
+            <label for="textarea_for_additional_in_formation"><strong>Напишите о себе: </strong></label>
+            <textarea id="textarea_for_additional_in_formation" placeholder="Напишите о себе" name="textareaForAdditionalInformation"></textarea>
             <br />
             <br />
 
-            <label>
-                <strong>Укажите ваш пол</strong>
-                <br />
-                <label for="radioMale">мужской: </label>
-                <input id="radioMale" type="radio" value="male" name="gender" />
-                <br />
-                <label for="radioFemale">женский: </label>
-                <input id="radioFemale" type="radio" value="female" name="gender" checked="checked" />
-            </label>
+            <label><strong>Укажите ваш пол:</strong></label>
+            <br />
+            <input id="radio_male" type="radio" value="male" name="gender" />
+            <label for="radio_male">мужской</label>
+            <br />
+            <input id="radio_female" type="radio" value="female" name="gender" checked="checked" />
+            <label for="radio_female">женский</label>
             <br />
             <br />
 
             <label><strong>Имеете ли вы вредные привычки?</strong></label>
             <br />
-            <label for="smoke">Не курю: </label>
             <input id="smoke" type="checkbox" value="true" name="checkBoxSmoke" checked="checked" />
+            <label for="smoke">Не курю</label>
             <br />
-            <label for="drink">Не пью: </label>
             <input id="drink" type="checkbox" value="false" name="checkBoxDrink" />
+            <label for="drink">Не пью</label>
             <br />
             <br />
 
-            <label><strong>Выберите вашу профессию из списка: </strong></label>
-            <select id="selectMajor" size="1" name="selectMajor">
+            <label for="selected_major"><strong>Выберите вашу профессию из списка: </strong></label>
+            <select id="selected_major" size="1" name="selectMajor">
                 <optgroup label="Управляющий персонал">
                     <option value="projectManager">Менеджер проекта</option>
                     <option value="teamLead">Team lead</option>
@@ -68,8 +66,8 @@
             <br />
             <br />
 
-            <label><strong>Выберите ваше хобби из списка:</strong></label>
-            <select id="selectHobby" size="3" multiple="multiple" name="selectHobby">
+            <label for="select_hobby"><strong>Выберите ваше хобби из списка:</strong></label>
+            <select id="select_hobby" size="3" multiple="multiple" name="selectHobby">
                 <option value="reading">Чтение</option>
                 <option value="movies">Фильмы</option>
                 <option value="programming">Программирование</option>
@@ -80,7 +78,7 @@
             <br />
             <br />
 
-            <input id="submitData" type="submit" value="Отправить" name="submitData" />
+            <input id="submit_data" type="submit" value="Отправить" name="submitData" />
         </form>
         <br />
         <br />
