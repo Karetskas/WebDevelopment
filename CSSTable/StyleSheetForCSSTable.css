@@ -1,0 +1,57 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 22px;
+    letter-spacing: 0.7px;
+    word-spacing: -1px;
+    font-family: "Kievit Offc Pro Regular", "Arial", sans-serif;
+}
+
+.block_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.table {
+    width: 859px;
+    height: 310px;
+    background: #ffffff;
+    border-collapse: collapse;
+}
+
+.head_table {
+    text-align: left;
+    color: #ffffff;
+    background: #3498DB;
+}
+
+.table_cell {
+    padding: 5px 0 0 11px;
+    height: 51.5px;
+    border: 1px solid #CECECE;
+    font-weight: 500;
+}
+
+.cell_first_name {
+    width: 175px;
+}
+
+.cell_last_name {
+    width: 173px;
+}
+
+.cell_job_title {
+    width: 310px;
+}
+
+.cell_twitter {
+    width: 200px;
+}
+
+.row:nth-child(odd) {
+    background: #EEEEEE;
+}
