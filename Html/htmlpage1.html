@@ -6,75 +6,93 @@
 </head>
 <body>
     <header>
-        <h1><ins>Заполните анкету!</ins></h1>
+        <h1><u>Заполните анкету!</u></h1>
     </header>
     <main>
         <form method="post" action="/myProfile.php">
-            <label for="text_for_name"><strong>Введите ваше имя: </strong></label>
-            <input id="text_for_name" type="text" placeholder="введите ваше имя" name="textForName" />
+            <label>
+                <strong>Введите ваше имя: </strong>
+		        <input id="text_for_name" type="text" placeholder="введите ваше имя" name="textForName"/>
+	        </label>
+	        <br />
             <br />
+	        <label>
+                <strong>Введите вашу фамилию: </strong>
+		        <input id="text_for_last_name" type="text" placeholder="введите вашу фамилию" name="textForLastName"/>
+	        </label>
+	        <br />
             <br />
-
-            <label for="text_for_last_name"><strong>Введите вашу фамилию: </strong></label>
-            <input id="text_for_last_name" type="text" placeholder="введите вашу фамилию" name="textForLastName" />
-            <br />
-            <br />
-
-            <label for="textarea_for_additional_in_formation"><strong>Напишите о себе: </strong></label>
-            <textarea id="textarea_for_additional_in_formation" placeholder="Напишите о себе" name="textareaForAdditionalInformation"></textarea>
+	        <label>
+		        <strong>Напишите о себе: </strong>
+		        <textarea id="textarea_for_additional_in_formation" placeholder="Напишите о себе" name="textareaForAdditionalInformation"></textarea>
+	        </label>
             <br />
             <br />
 
             <label><strong>Укажите ваш пол:</strong></label>
             <br />
-            <input id="radio_male" type="radio" value="male" name="gender" />
-            <label for="radio_male">мужской</label>
+            <label>
+	            <input id="radio_male" type="radio" value="male" name="gender" />
+	            мужской
+            </label>
             <br />
-            <input id="radio_female" type="radio" value="female" name="gender" checked="checked" />
-            <label for="radio_female">женский</label>
+            <label>
+	            <input id="radio_female" type="radio" value="female" name="gender" checked="checked" />
+	            женский
+            </label>
             <br />
             <br />
 
             <label><strong>Имеете ли вы вредные привычки?</strong></label>
             <br />
-            <input id="smoke" type="checkbox" value="true" name="checkBoxSmoke" checked="checked" />
-            <label for="smoke">Не курю</label>
+	        <label>
+				<input id="smoke" type="checkbox" value="true" name="checkBoxSmoke" checked="checked" />
+		        Не курю
+	        </label>
             <br />
-            <input id="drink" type="checkbox" value="false" name="checkBoxDrink" />
-            <label for="drink">Не пью</label>
-            <br />
-            <br />
-
-            <label for="selected_major"><strong>Выберите вашу профессию из списка: </strong></label>
-            <select id="selected_major" size="1" name="selectMajor">
-                <optgroup label="Управляющий персонал">
-                    <option value="projectManager">Менеджер проекта</option>
-                    <option value="teamLead">Team lead</option>
-                </optgroup>
-                <optgroup label="Разработчики">
-                    <option value="qualityAssurance">Тестировщик</option>
-                    <option value="systemAnalyst">Системный аналитик</option>
-                    <option value="programmer" selected="selected">Программист</option>
-                    <option value="technicalWriter">Технический писатель</option>
-                    <option value="designer">Дизайнер</option>
-                </optgroup>
-                <optgroup label="Вспомогательный персонал">
-                    <option value="humanResources">HR</option>
-                    <option value="systemAdministrator">Системный администратор</option>
-                </optgroup>
-            </select>
+	        <label>
+				<input id="drink" type="checkbox" value="false" name="checkBoxDrink" />
+		        Не пью
+	        </label>
             <br />
             <br />
 
-            <label for="select_hobby"><strong>Выберите ваше хобби из списка:</strong></label>
-            <select id="select_hobby" size="3" multiple="multiple" name="selectHobby">
-                <option value="reading">Чтение</option>
-                <option value="movies">Фильмы</option>
-                <option value="programming">Программирование</option>
-                <option value="myrmicology" selected="selected">Мирмикология</option>
-                <option value="scientificBroadcasts">Научные передачи</option>
-                <option value="philately">Филателия</option>
-            </select>
+            <label>
+                <strong>Выберите вашу профессию из списка: </strong>
+
+	            <select id="selected_major" size="1" name="selectMajor">
+		            <optgroup label="Управляющий персонал">
+			            <option value="projectManager">Менеджер проекта</option>
+			            <option value="teamLead">Team lead</option>
+		            </optgroup>
+		            <optgroup label="Разработчики">
+			            <option value="qualityAssurance">Тестировщик</option>
+			            <option value="systemAnalyst">Системный аналитик</option>
+			            <option value="programmer" selected="selected">Программист</option>
+			            <option value="technicalWriter">Технический писатель</option>
+			            <option value="designer">Дизайнер</option>
+		            </optgroup>
+		            <optgroup label="Вспомогательный персонал">
+			            <option value="humanResources">HR</option>
+			            <option value="systemAdministrator">Системный администратор</option>
+		            </optgroup>
+	            </select>
+            </label>
+            <br />
+            <br />
+
+			<label>
+				<strong>Выберите ваше хобби из списка:</strong>
+
+				<select id="select_hobby" size="3" multiple="multiple" name="selectHobby">
+					<option value="reading">Чтение</option>
+					<option value="movies">Фильмы</option>
+					<option value="programming">Программирование</option>
+					<option value="myrmicology" selected="selected">Мирмикология</option>
+					<option value="scientificBroadcasts">Научные передачи</option>
+					<option value="philately">Филателия</option>
+				</select>
+			</label>
             <br />
             <br />
 
