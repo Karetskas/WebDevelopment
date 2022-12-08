@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Html", "Html\Html.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSSText", "CSSText\CSSText.csproj", "{65283317-787B-48E9-89D5-F8B9A79446D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSSTable", "CSSTable\CSSTable.csproj", "{F9C81D79-A711-41C0-B88F-D01B4096A918}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSSTable", "CSSTable\CSSTable.csproj", "{F9C81D79-A711-41C0-B88F-D01B4096A918}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSSForm", "CSSForm\CSSForm.csproj", "{FAAA2D97-E117-4C54-98E2-7AE544AAAB49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{F9C81D79-A711-41C0-B88F-D01B4096A918}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9C81D79-A711-41C0-B88F-D01B4096A918}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9C81D79-A711-41C0-B88F-D01B4096A918}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAAA2D97-E117-4C54-98E2-7AE544AAAB49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAAA2D97-E117-4C54-98E2-7AE544AAAB49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAAA2D97-E117-4C54-98E2-7AE544AAAB49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAAA2D97-E117-4C54-98E2-7AE544AAAB49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Форма заявки</title>
+    <meta name="viewport" content="width=device-width" initial-scale="1.0" />
+    <meta charset="utf-8" />
+    <link href="normalize.css" rel="stylesheet" />
+    <link href="StyleSheetForCSSForm.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <h2 class="title">Отправить заявку</h2>
+
+        <form class="form" method="post" action="/request.html">
+            <label>
+                Ваше имя
+                <br />
+                <input type="text" name="text_name" placeholder="Ваше имя *" tabindex="0" />
+            </label>
+            <br />
+
+            <label>
+                Ваш номер телефона
+                <br />
+
+                <input type="tel" name="telephone_namber" placeholder="Ваш номер телефона *" tabindex="1" />
+            </label>
+            <br />
+
+            <label>
+                Ваш email или VK
+                <br />
+
+                <input type="text" name="text_email_or_VK" placeholder="Ваш email или VK *" tabindex="2" />
+            </label>
+            <br />
+
+            <label>
+                Комментарий
+                <br />
+
+                <textarea name="textarea_comment" placeholder="Комментарий (не обязательно)" tabindex="3"></textarea>
+            </label>
+            <br />
+
+            <span class="additional_info">Заполните и отправьте форму, и мы перезвоним Вам по указанному номеру</span>
+            <br />
+
+            <input type="submit" name="submit_send_request" value="Отправить заявку" />
+        </form>
+    </div>
+</body>
+</html>
