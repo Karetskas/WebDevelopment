@@ -4,18 +4,19 @@
 
 html {
     font-size: 18px;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     word-wrap: break-word;
+    color: #928A92;
 }
 
 body {
-    background-color: dimgrey;
+    background-color: #696969;
 }
 
 .course {
-    padding: 7px 12px 3px 11.5px;
+    padding: 7px 12px 3px 12px;
     margin: 0 auto;
-    max-width: 849px;
+    max-width: 860px;
     background: #FEEED6;
 }
 
@@ -24,21 +25,19 @@ body {
     font-size: 177.777%; /*32px*/
     font-weight: 500;
     line-height: 1.1;
-    letter-spacing: 0.05px;
+    color: #676565;
 }
 
 .start, .price, .price_for_student, .course_content {
     margin: 0 0 10px 0;
     font-size: 105.555%; /*19px*/
-    word-spacing: 0.8px;
 }
 
 .course_content {
     margin: 15px 0 8px 0;
-    letter-spacing: 0.1px;
 }
 
-.list_item > strong {
+.criterion > strong {
     color: #378FB4;
 }
 
@@ -46,7 +45,6 @@ body {
     margin: 0 0 11px 0;
     text-indent: 17px;
     text-align: justify;
-    word-spacing: -1.4px;
     line-height: 1.34;
 }
 
