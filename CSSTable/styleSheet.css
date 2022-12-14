@@ -4,12 +4,10 @@
 
 html {
     font-size: 22px;
-    letter-spacing: 0.7px;
-    word-spacing: -1px;
     font-family: "Kievit Offc Pro Regular", "Arial", sans-serif;
 }
 
-.block_container {
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,19 +17,20 @@ html {
 .table {
     width: 859px;
     height: 310px;
-    background: #ffffff;
+    background: #FFF;
     border-collapse: collapse;
 }
 
-.head_table {
+.table thead {
     text-align: left;
-    color: #ffffff;
+    color: #FFF;
     background: #3498DB;
 }
 
-.table_cell {
-    padding: 5px 0 0 11px;
-    height: 51.5px;
+.table th,
+.table td {
+    padding: 12px 11px 5px 12px;
+    height: 51px;
     border: 1px solid #CECECE;
     font-weight: 500;
 }
@@ -52,6 +51,6 @@ html {
     width: 200px;
 }
 
-.row:nth-child(odd) {
-    background: #EEEEEE;
+.table tbody tr:nth-child(odd) {
+    background: #EEE;
 }
