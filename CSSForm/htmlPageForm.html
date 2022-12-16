@@ -2,14 +2,14 @@
 <html lang="ru">
 <head>
     <title>Форма заявки</title>
-    <meta name="viewport" content="width=device-width" initial-scale="1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <link href="normalize.css" rel="stylesheet" />
-    <link href="StyleSheetForCSSForm.css" rel="stylesheet" />
+    <link href="styleSheetForm.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
-        <h2 class="title">Отправить заявку</h2>
+        <h1 class="title">Отправить заявку</h1>
 
         <form class="form" method="post" action="/request.html">
             <label>
@@ -23,7 +23,7 @@
                 Ваш номер телефона
                 <br />
 
-                <input type="tel" name="telephone_namber" placeholder="Ваш номер телефона *" tabindex="1" />
+                <input type="tel" name="telephone_number" placeholder="Ваш номер телефона *" tabindex="1" />
             </label>
             <br />
 
@@ -43,7 +43,7 @@
             </label>
             <br />
 
-            <span class="additional_info">Заполните и отправьте форму, и мы перезвоним Вам по указанному номеру</span>
+            <span>Заполните и отправьте форму, и мы перезвоним Вам по указанному номеру</span>
             <br />
 
             <input type="submit" name="submit_send_request" value="Отправить заявку" />
