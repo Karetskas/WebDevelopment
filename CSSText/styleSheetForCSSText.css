@@ -28,7 +28,7 @@ body {
     color: #676565;
 }
 
-.start, .price, .price_for_student, .course_content {
+.criterion {
     margin: 0 0 10px 0;
     font-size: 105.555%; /*19px*/
 }
