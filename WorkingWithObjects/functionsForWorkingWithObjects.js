@@ -1,10 +1,10 @@
 ﻿"use strict";
 
 (function () {
-    var countriesArray = [
+    var countries = [
         {
             name: "India",
-            citiesArray: [
+            cities: [
                 {
                     name: "Mumbai",
                     population: 12422373
@@ -13,7 +13,7 @@
         },
         {
             name: "Lesotho",
-            citiesArray: [
+            cities: [
                 {
                     name: "Maseru",
                     population: 227880
@@ -30,11 +30,11 @@
         },
         {
             name: "USA",
-            citiesArray: []
+            cities: []
         },
         {
             name: "Gabon",
-            citiesArray: [
+            cities: [
                 {
                     name: "Libreville",
                     population: 703939
@@ -51,7 +51,7 @@
         },
         {
             name: "Togo",
-            citiesArray: [
+            cities: [
                 {
                     name: "Lome",
                     population: 729258
@@ -64,65 +64,66 @@
         }
     ];
 
-    var countriesWithMaxCitiesCount = getCountriesObjectsListWithMaxCitiesCount(countriesArray)
-        .map(function (element) {
-            return element.name;
-        });
+    var test = [
+        {
+            name: "Togo",
+            cities: [
+                {
+                    name: "Lome",
+                    population: 729258
+                },
+                {
+                    name: "Sokode",
+                    population: 117811
+                }
+            ]
+        }
+    ];
 
+    var countriesWithMaxCitiesCount = getCountriesWithMaxCitiesCount(test)
+        .map(function (country) {
+            return country.name;
+        });
 
     console.log("List of countries with the maximum count of cities: [" + countriesWithMaxCitiesCount.join(", ") + "].");
 
-    var lineSeparator = new Array(99).fill("#").reduce(function (row, symbol) {
-        return row + symbol;
-    }, "#");
-
-    console.log(lineSeparator);
+    console.log("#".repeat(100));
 
     console.log("List of population of countries: ");
 
-    var countriesTotalPopulation = getObjectWithCountriesTotalPopulation(countriesArray);
+    var countriesTotalPopulation = getObjectWithCountriesTotalPopulation(countries);
 
     for (var country in countriesTotalPopulation) {
-        if (Object.prototype.hasOwnProperty.call(countriesTotalPopulation, country)) {
+        if (countriesTotalPopulation.hasOwnProperty(country)) {
             console.log("\"" + country + "\": " + countriesTotalPopulation[country] + " peoples");
         }
     }
 
-    function getCountriesObjectsListWithMaxCitiesCount(array) {
-        if (array === null
-            || array === undefined
-            || Array.isArray(array) === false) {
-            return NaN;
-        }
+    function getCountriesWithMaxCitiesCount(countryObjectsArray) {
+        var maxCitiesCount = -Infinity;
 
-        var sortingCountriesByCitiesCount = array.sort(function (a, b) {
-            return b.citiesArray.length - a.citiesArray.length;
+        countryObjectsArray.forEach(function (country) {
+            if (country.cities.length > maxCitiesCount) {
+                maxCitiesCount = country.cities.length;
+            }
         });
 
-        var citiesMaxCount = sortingCountriesByCitiesCount[0].citiesArray.length;
-
-        return sortingCountriesByCitiesCount.filter(function (element) {
-            return element.citiesArray.length === citiesMaxCount;
+        return countryObjectsArray.filter(function (country) {
+            return country.cities.length === maxCitiesCount;
         });
     }
 
-    function getObjectWithCountriesTotalPopulation(array) { 
-        if (array === null
-            || array === undefined
-            || Array.isArray(array) === false) {
-            return NaN;
-        }
+    function getObjectWithCountriesTotalPopulation(countryObjectsArray) {
+        var countriesPopulation = {};
 
-        var objectWorld = {};
-
-        array.forEach(function (element) {
-            var totalPopulation = element.citiesArray.reduce(function (total, populationProperty) {
-                return total + populationProperty.population;
+        countryObjectsArray.forEach(function (country) {
+            var countryPopulation = country.cities.reduce(function (totalPopulation, city) {
+                return totalPopulation + city.population;
             }, 0);
 
-            objectWorld[element.name] = totalPopulation;
+            countriesPopulation[country.name] = countryPopulation;
         });
 
-        return objectWorld;
+        return countriesPopulation;
     }
 })();
