@@ -17,15 +17,15 @@
         return "#".repeat(100);
     }
 
-    function isNotNumericArray(currentArray) {
-        return Array.isArray(currentArray) === false
-            || currentArray.some(function (item) {
-                return typeof (item) !== "number";
+    function isNumericArray(array) {
+        return Array.isArray(array)
+            && array.every(function (item) {
+                return typeof (item) === "number";
             });
     }
 
     function sortDescending(sortableArray) {
-        if (isNotNumericArray(sortableArray)) {
+        if (!isNumericArray(sortableArray)) {
             return null;
         }
 
@@ -34,68 +34,68 @@
         });
     }
 
-    var array = [12, 1, 11, 7, 3, 15, 2, 9, 3, 13, 10, 8, 4, 5, 2, 14, 6];
+    var array1 = [12, 1, 11, 7, 3, 15, 2, 9, 3, 13, 10, 8, 4, 5, 2, 14, 6];
     printToConsole(
-        "Array before sorted: [" + array.join(", ") + "].",
-        "Array after sorted: [" + sortDescending(array).join(", ") + "].");
+        "Array before sorted: [" + array1.join(", ") + "].",
+        "Array after sorted: [" + sortDescending(array1).join(", ") + "].");
 
-    function isArrayWithRequestedElementsCount(currentArray, elementsCount) {
-        return Array.isArray(currentArray) === true
+    function isArrayWithRequestedElementsCount(array, elementsCount) {
+        return Array.isArray(array) === true
             && elementsCount !== null
             && elementsCount !== undefined
             && typeof (elementsCount) === "number"
             && Math.floor(elementsCount) >= 0
-            && Math.floor(elementsCount) < currentArray.length;
+            && Math.floor(elementsCount) < array.length;
     }
 
-    function getItemsFromBeginning(currentArray, elementsCount) {
-        if (isArrayWithRequestedElementsCount(currentArray, elementsCount) === false) {
+    function getItemsFromBeginning(array, elementsCount) {
+        if (!isArrayWithRequestedElementsCount(array, elementsCount)) {
             return null;
         }
 
-        return currentArray.slice(0, elementsCount);
-    }
-
-    var array1 = [12, 1, 11, 7, 3, 15, 2, 9, 3, 13, 10, 8, 4, 5, 2, 14, 6];
-    printToConsole(
-        "Current array: [" + array1.join(", ") + "].",
-        "First 5 array items: [" + getItemsFromBeginning(array1, 5).join(", ") + "].");
-
-    function getItemsFromEnd(currentArray, elementsCount) {
-        if (isArrayWithRequestedElementsCount(currentArray, elementsCount) === false) {
-            return null;
-        }
-
-        return currentArray.slice(currentArray.length - elementsCount);
+        return array.slice(0, elementsCount);
     }
 
     var array2 = [12, 1, 11, 7, 3, 15, 2, 9, 3, 13, 10, 8, 4, 5, 2, 14, 6];
     printToConsole(
         "Current array: [" + array2.join(", ") + "].",
-        "Last 5 array items: [" + getItemsFromEnd(array2, 5).join(", ") + "].");
+        "First 5 array items: [" + getItemsFromBeginning(array2, 5).join(", ") + "].");
 
-    function getEvenNumbersSum(currentArray) {
-        if (isNotNumericArray(currentArray)) {
+    function getItemsFromEnd(array, elementsCount) {
+        if (!isArrayWithRequestedElementsCount(array, elementsCount)) {
             return null;
         }
 
-        return currentArray.filter(function (item) {
-            return item % 2 === 0;
-        }).reduce(function (total, item) {
-            return total + item;
-        }, 0);
+        return array.slice(array.length - elementsCount);
     }
 
     var array3 = [12, 1, 11, 7, 3, 15, 2, 9, 3, 13, 10, 8, 4, 5, 2, 14, 6];
     printToConsole(
         "Current array: [" + array3.join(", ") + "].",
-        "Sum of even items of array: " + getEvenNumbersSum(array3));
+        "Last 5 array items: [" + getItemsFromEnd(array3, 5).join(", ") + "].");
+
+    function getEvenNumbersSum(array) {
+        if (!isNumericArray(array)) {
+            return null;
+        }
+
+        return array.filter(function (item) {
+            return item % 2 === 0;
+        }).reduce(function (evenNumbersSum, item) {
+            return evenNumbersSum + item;
+        }, 0);
+    }
+
+    var array4 = [12, 1, 11, 7, 3, 15, 2, 9, 3, 13, 10, 8, 4, 5, 2, 14, 6];
+    printToConsole(
+        "Current array: [" + array4.join(", ") + "].",
+        "Sum of even items of array: " + getEvenNumbersSum(array4));
 
     function getOneHundredNumbersArray() {
         var numbersArray = [];
 
-        for (var i = 0; i < 100; i++) {
-            numbersArray.push(i + 1);
+        for (var i = 1; i <= 100; i++) {
+            numbersArray.push(i);
         }
 
         return numbersArray;
@@ -103,12 +103,12 @@
 
     printToConsole("Array of numbers from 1 to 100 elements: [" + getOneHundredNumbersArray().join(", ") + "].");
 
-    function getEvenNumbersSquaresArray(currentArray) {
-        if (isNotNumericArray(currentArray)) {
+    function getEvenNumbersSquaresArray(array) {
+        if (!isNumericArray(array)) {
             return null;
         }
 
-        return currentArray.filter(function (item) {
+        return array.filter(function (item) {
             return item % 2 === 0;
         }).map(function (item) {
             return item * item;
