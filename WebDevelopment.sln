@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSSForm", "CSSForm\CSSForm.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkingWithArrays", "WorkingWithArrays\WorkingWithArrays.csproj", "{10C1052E-84F8-4D3A-A78D-2567B627C117}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithObjects", "WorkingWithObjects\WorkingWithObjects.csproj", "{6BCEC050-AB8D-4289-86B9-EB96B5C62A02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkingWithObjects", "WorkingWithObjects\WorkingWithObjects.csproj", "{6BCEC050-AB8D-4289-86B9-EB96B5C62A02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureConversion", "TemperatureConversion\TemperatureConversion.csproj", "{AAAB8700-1E01-437D-8395-FF9796A8219F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{6BCEC050-AB8D-4289-86B9-EB96B5C62A02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BCEC050-AB8D-4289-86B9-EB96B5C62A02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BCEC050-AB8D-4289-86B9-EB96B5C62A02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAAB8700-1E01-437D-8395-FF9796A8219F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAAB8700-1E01-437D-8395-FF9796A8219F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAAB8700-1E01-437D-8395-FF9796A8219F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAAB8700-1E01-437D-8395-FF9796A8219F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
