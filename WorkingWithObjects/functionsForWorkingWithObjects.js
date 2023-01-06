@@ -64,23 +64,7 @@
         }
     ];
 
-    var test = [
-        {
-            name: "Togo",
-            cities: [
-                {
-                    name: "Lome",
-                    population: 729258
-                },
-                {
-                    name: "Sokode",
-                    population: 117811
-                }
-            ]
-        }
-    ];
-
-    var countriesWithMaxCitiesCount = getCountriesWithMaxCitiesCount(test)
+    var countriesWithMaxCitiesCount = getCountriesWithMaxCitiesCount(countries)
         .map(function (country) {
             return country.name;
         });
@@ -91,29 +75,28 @@
 
     console.log("List of population of countries: ");
 
-    var countriesTotalPopulation = getObjectWithCountriesTotalPopulation(countries);
+    var countriesPopulation = getObjectWithCountriesPopulation(countries);
 
-    for (var country in countriesTotalPopulation) {
-        if (countriesTotalPopulation.hasOwnProperty(country)) {
-            console.log("\"" + country + "\": " + countriesTotalPopulation[country] + " peoples");
+    for (var country in countriesPopulation) {
+        if (countriesPopulation.hasOwnProperty(country)) {
+            console.log("\"" + country + "\": " + countriesPopulation[country] + " peoples");
         }
     }
 
     function getCountriesWithMaxCitiesCount(countryObjectsArray) {
-        var maxCitiesCount = -Infinity;
+        var maxCitiesCount = countryObjectsArray.reduce(function (countryWithMaxCitiesCount, country) {
+            return country.cities.length > countryWithMaxCitiesCount
+                ? country.cities.length
+                : countryWithMaxCitiesCount;
 
-        countryObjectsArray.forEach(function (country) {
-            if (country.cities.length > maxCitiesCount) {
-                maxCitiesCount = country.cities.length;
-            }
-        });
+        }, 0);
 
         return countryObjectsArray.filter(function (country) {
             return country.cities.length === maxCitiesCount;
         });
     }
 
-    function getObjectWithCountriesTotalPopulation(countryObjectsArray) {
+    function getObjectWithCountriesPopulation(countryObjectsArray) {
         var countriesPopulation = {};
 
         countryObjectsArray.forEach(function (country) {
