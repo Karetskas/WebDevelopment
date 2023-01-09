@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="normalize.css" />
-    <link rel="stylesheet" href="temperatureConvertionStyleSheet.css" />
-    <script type="text/javascript" src="functionsForTemperatureConvertion.js" defer></script>
+    <link rel="stylesheet" href="temperatureConversionStyleSheet.css" />
+    <script src="functionsForTemperatureConversion.js" defer></script>
 </head>
 <body>
     <div class="container">
@@ -17,18 +17,20 @@
         <form>
             <label>
                 Enter the temperature in degrees Celsius:
-                <input class="text_box_control" type="text" name="get_temperature" value="-34.15" tabindex="1" autofocus />
+                <input class="text_box_control" type="text" name="get_temperature" value="0" tabindex="1" autofocus />
             </label>
 
             <br />
             <div class="flex_container">
-                <input class="fahrenheit_conversion_button" type="button" name="conversion_to_degrees_fahrenheit" value="Convert to Fahrenheit" tabindex="2" />
+                <input class="button" type="button" name="conversion_to_degrees_fahrenheit" value="Convert to Fahrenheit" tabindex="2" />
 
-                <input class="kelvin_conversion_button" type="button" name="conversion_to_degrees_kelvin" value="Convert to Kelvin" tabindex="3" />
+                <input class="button" type="button" name="conversion_to_degrees_kelvin" value="Convert to Kelvin" tabindex="3" />
             </div>
         </form>
 
         <hr class="dividing_line" />
+
+        <h2 class="result_history">History of results is empty</h2>
     </div>
 </body>
 </html>

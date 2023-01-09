@@ -53,33 +53,23 @@ body {
     flex-wrap: wrap;
 }
 
-.fahrenheit_conversion_button,
-.kelvin_conversion_button {
+.button {
     margin: 15px 0 5px;
     padding: 5px;
+    width: 185px;
     border-radius: 5px;
     border: none;
     font-weight: 600;
     background: #080;
 }
 
-.kelvin_conversion_button {
-    padding: 5px 21px;
-}
-
-    .fahrenheit_conversion_button:hover,
-    .kelvin_conversion_button:hover {
+    .button:hover {
         cursor: pointer;
         background: #0D0;
     }
 
-.label_control {
-    padding: 0 5px;
-    border-radius: 5px;
-    border: none;
-    font-weight: 600;
-    color: #000;
-    background: #0B0;
+.result_history {
+    margin: 0 0 10px;
 }
 
 .flex_container_for_result {
@@ -88,10 +78,10 @@ body {
     flex-wrap: wrap;
 }
 
-.typeResult,
+.temperature_in_celsius,
 .result {
     padding: 0 5px;
-    width: 35%;
+    width: 49%;
     margin-bottom: 10px;
     border-radius: 5px;
     font-weight: 600;
@@ -100,12 +90,8 @@ body {
     border: none;
 }
 
-.result {
-    width: 64%;
-}
-
-@media (max-width: 341px) {
-    .typeResult {
+@media (max-width: 400px) {
+    .temperature_in_celsius {
         width: 100%;
         margin-bottom: 3px;
     }
