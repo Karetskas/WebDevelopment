@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Phone book</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="normalize.css" rel="stylesheet" />
+    <link href="styleSheetForPhoneBook.css" rel="stylesheet" />
+    <script src="jquery-3.6.3.js" defer></script>
+    <script src="javaScriptForPhoneBook.js" defer></script>
+</head>
+<body>
+    <h1 class="title">PHoNЕ BooK</h1>
+    <div class="container">
+        <form class="adding_contact_form">
+            <h2 class="input_for_title">Add new contact:</h2>
+            <label class="label">First name:</label>
+            <div class="container_row">
+                <input class="text_box" type="text" name="first_name" value="" placeholder="enter your first name..." tabindex="1" autofocus />
+                <label class="tooltip"></label>
+            </div>
+
+            <label class="label">Last name:</label>
+            <div class="container_row">
+                <input class="text_box" type="text" name="last_name" value="" placeholder="enter your last name..." tabindex="2" />
+                <label class="tooltip"></label>
+            </div>
+
+            <label class="label">Phone number:</label>
+            <div class="container_row">
+                <input class="text_box" type="tel" name="phone_number" value="" placeholder="enter your phone number..." tabindex="3" />
+                <label class="tooltip"></label>
+            </div>
+
+            <div class="container_row">
+                <input class="add_contact" type="button" name="add_new_contact" value="Add contact" disabled tabindex="4" />
+            </div>
+        </form>
+
+        <div class="table">
+            <div class="table_header_container">
+                <div>
+                    <span>№</span>
+                </div>
+                <div>
+                    <span>Last name</span>
+                </div>
+                <div>
+                    <span>First name</span>
+                </div>
+                <div>
+                    <span>Phone number</span>
+                </div>
+                <div></div>
+            </div>
+
+            <h3 class="heading_no_contacts">Phone book is empty...</h3>
+
+        </div>
+    </div>
+</body>
+</html>
