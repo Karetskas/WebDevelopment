@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-(function () {
+document.addEventListener("DOMContentLoaded", function () {
     function getElement(typeElement, attributesObject) {
         var element = document.createElement(typeElement);
 
@@ -13,81 +13,49 @@
         return element;
     }
 
-    function changeColorMouseDown(event) {
-        event.target.classList.remove("button");
-        event.target.classList.add("button_down");
-    }
-
-    function changeColorMouseUp(event) {
-        event.target.classList.remove("button_down");
-        event.target.classList.add("button");
-    }
-
-    var buttonFunctions = new Map();
-
-    function addEventsForButtons(buttons, buttonsCount) {
-        for (var i = 0; i < buttonsCount; i++) {
-            buttons[i].addEventListener("mousedown", changeColorMouseDown);
-            buttons[i].addEventListener("mouseleave", changeColorMouseUp);
-            buttons[i].addEventListener("click", changeColorMouseUp);
-            buttons[i].addEventListener("click", buttonFunctions.get(buttons[i]));
-        }
-    }
-
-    function deleteEventsForButtons(buttons, buttonsCount) {
-        for (var i = 0; i < buttonsCount; i++) {
-            buttons[i].removeEventListener("mousedown", changeColorMouseDown);
-            buttons[i].removeEventListener("mouseleave", changeColorMouseUp);
-            buttons[i].removeEventListener("click", changeColorMouseUp);
-            buttons[i].removeEventListener("click", buttonFunctions.get(buttons[i]));
-
-            buttonFunctions.delete(buttons[i]);
-        }
-    }
-
-    var tasksTexts = new WeakMap();
-
     function exitEditMode(containerTask, isTaskSaving) {
-        var entryField = containerTask.querySelector(".text_field");
+        var textBoxElement = containerTask.querySelector(".text_field");
+
+        var paragraph = containerTask.querySelector(".task_description");
 
         if (isTaskSaving) {
-            tasksTexts.set(containerTask, entryField.value);
+            paragraph.textContent = textBoxElement.value;
         }
 
-        entryField.remove();
+        hideTooltip(containerTask.firstChild);
 
-        var paragraph = getElement("p", {
-            class: "task_description"
-        });
-        paragraph.textContent = tasksTexts.get(containerTask);
+        textBoxElement.remove();
 
-        var divTextContainer = containerTask.querySelector(".text_container");
-        divTextContainer.append(paragraph);
+        paragraph.style.display = "block";
 
         var editButton = getElement("input", {
             class: "button",
             type: "button",
-            name: "edit_button",
             value: "edit"
         });
 
         var buttons = containerTask.querySelectorAll(".button");
 
-        deleteEventsForButtons(buttons, buttons.length - 1);
-
         for (var i = 0; i < 2; i++) {
             buttons[i].remove();
         }
 
-        var divButtonsContainer = containerTask.querySelector(".buttons_container");
-        divButtonsContainer.prepend(editButton);
+        var buttonsContainer = containerTask.querySelector(".buttons_container");
+        buttonsContainer.prepend(editButton);
 
-        buttonFunctions.set(editButton, editTask);
-        addEventsForButtons([editButton], 1);
+        editButton.addEventListener("click", editTask);
     }
 
     function saveTask(event) {
         var taskElement = event.target.parentElement.parentElement;
+
+        var textBoxElement = taskElement.querySelector(".text_field");
+
+        if (!isValidText(textBoxElement.value, textBoxElement)) {
+            textBoxElement.value = "";
+
+            return;
+        }
 
         exitEditMode(taskElement, true);
     }
@@ -106,50 +74,42 @@
         var elementEditTask = getElement("input", {
             class: "text_field",
             type: "text",
-            name: "edit_text",
             value: paragraph.textContent
         });
 
-        paragraph.remove();
+        paragraph.style.display = "none";
 
-        var divTextContainer = taskElement.querySelector(".text_container");
-        divTextContainer.append(elementEditTask);
+        var textContainer = taskElement.querySelector(".text_container");
+        textContainer.prepend(elementEditTask);
 
-        var divButtonsContainer = taskElement.querySelector(".buttons_container");
+        var buttonsContainer = taskElement.querySelector(".buttons_container");
 
-        var editButton = divButtonsContainer.querySelector(".button");
-        deleteEventsForButtons([editButton], 1);
+        var editButton = buttonsContainer.querySelector(".button");
         editButton.remove();
 
         var cancelButton = getElement("input", {
             class: "button",
             type: "button",
-            name: "cancel_button",
             value: "cancel"
         });
 
         var saveButton = getElement("input", {
             class: "button",
             type: "button",
-            name: "save_button",
             value: "save"
         });
 
-        divButtonsContainer.prepend(cancelButton);
-        divButtonsContainer.prepend(saveButton);
+        buttonsContainer.prepend(cancelButton);
+        buttonsContainer.prepend(saveButton);
 
-        var buttons = divButtonsContainer.querySelectorAll(".button");
+        var buttons = buttonsContainer.querySelectorAll(".button");
 
-        buttonFunctions.set(buttons[0], saveTask);
-        buttonFunctions.set(buttons[1], cancelTaskEditing);
-        addEventsForButtons(buttons, buttons.length - 1);
+        buttons[0].addEventListener("click", saveTask);
+        buttons[1].addEventListener("click", cancelTaskEditing);
     }
 
     function deleteTask(event) {
         var taskElement = event.target.parentElement.parentElement;
-
-        var buttons = taskElement.querySelectorAll(".button");
-        deleteEventsForButtons(buttons, buttons.length);
 
         taskElement.remove();
     }
@@ -158,41 +118,88 @@
         var paragraph = getElement("p", { class: "task_description" });
         paragraph.textContent = taskText;
 
-        var divTextContainer = getElement("div", { class: "text_container" });
-        divTextContainer.append(paragraph);
+        var textContainer = getElement("div", { class: "text_container" });
+        textContainer.append(paragraph);
+
+        var tooltip = document.querySelector(".tooltip").cloneNode(true);
+        textContainer.append(tooltip);
 
         var editButton = getElement("input", {
             class: "button",
             type: "button",
-            name: "edit_button",
             value: "edit"
         });
 
-        var divButtonsContainer = getElement("div", { class: "buttons_container" });
-        divButtonsContainer.append(editButton);
+        var buttonsContainer = getElement("div", { class: "buttons_container" });
+        buttonsContainer.append(editButton);
 
         var deleteButton = getElement("input", {
             class: "button",
             type: "button",
-            name: "delete_button",
             value: "delete"
         });
 
-        divButtonsContainer.append(deleteButton);
+        buttonsContainer.append(deleteButton);
 
-        var divContainer = getElement("div", { class: "container" });
-        divContainer.append(divTextContainer);
-        divContainer.append(divButtonsContainer);
+        var container = getElement("div", { class: "container" });
+        container.append(textContainer);
+        container.append(buttonsContainer);
 
-        return divContainer;
+        return container;
+    }
+
+    function showTooltip(textContainer) {
+        var tooltip = textContainer.querySelector(".tooltip");
+        tooltip.style.display = "block";
+
+        var textField = textContainer.querySelector(".text_field");
+        textField.style.border = "1px dashed #C00";
+
+        var buttonsContainer = textContainer.parentElement.querySelector(".buttons_container");
+        buttonsContainer.style.justifyContent = "flex-start";
+    }
+
+    function hideTooltip(textContainer) {
+        var tooltip = textContainer.querySelector(".tooltip");
+        tooltip.style.display = "none";
+
+        var textField = textContainer.querySelector(".text_field");
+        textField.style.border = "1px dashed #66A";
+
+        var buttonsContainer = textContainer.parentElement.querySelector(".buttons_container");
+        buttonsContainer.style.justifyContent = "center";
+    }
+
+    function disableInputValidation(event) {
+        if (event.target.value.trim().length !== 0) {
+            hideTooltip(event.target.parentElement);
+
+            event.target.removeEventListener("input", disableInputValidation);
+        }
+    }
+
+    function isValidText(taskText, textBoxElement) {
+        if (taskText === "" || taskText.trim().length === 0) {
+            showTooltip(textBoxElement.parentElement);
+
+            textBoxElement.addEventListener("input", disableInputValidation);
+
+            return false;
+        }
+
+        return true;
     }
 
     function addTask() {
-        var entryFieldElement = document.querySelector(".text_field");
+        var textBoxElement = document.querySelector(".text_field");
 
-        var taskText = entryFieldElement.value;
+        var taskText = textBoxElement.value;
 
-        if (taskText === "") {
+        textBoxElement.value = "";
+
+        textBoxElement.focus();
+
+        if (!isValidText(taskText, textBoxElement)) {
             return;
         }
 
@@ -201,15 +208,10 @@
 
         var buttons = task.querySelectorAll(".button");
 
-        buttonFunctions.set(buttons[0], editTask);
-        buttonFunctions.set(buttons[1], deleteTask);
-
-        addEventsForButtons(buttons, buttons.length);
-
-        tasksTexts.set(task, taskText);
+        buttons[0].addEventListener("click", editTask);
+        buttons[1].addEventListener("click", deleteTask);
     }
 
-    var buttons1 = document.querySelector(".button");
-    buttonFunctions.set(buttons1, addTask);
-    addEventsForButtons([buttons1], 1);
-})();
+    var addButton = document.querySelector(".button");
+    addButton.addEventListener("click", addTask);
+});
