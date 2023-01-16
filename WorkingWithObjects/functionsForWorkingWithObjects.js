@@ -77,21 +77,18 @@
 
     var countriesPopulation = getObjectWithCountriesPopulation(countries);
 
-    for (var country in countriesPopulation) {
-        if (countriesPopulation.hasOwnProperty(country)) {
-            console.log("\"" + country + "\": " + countriesPopulation[country] + " peoples");
+    for (var countryName in countriesPopulation) {
+        if (countriesPopulation.hasOwnProperty(countryName)) {
+            console.log("\"" + countryName + "\": " + countriesPopulation[countryName] + " peoples");
         }
     }
 
-    function getCountriesWithMaxCitiesCount(countryObjectsArray) {
-        var maxCitiesCount = countryObjectsArray.reduce(function (countryWithMaxCitiesCount, country) {
-            return country.cities.length > countryWithMaxCitiesCount
-                ? country.cities.length
-                : countryWithMaxCitiesCount;
-
+    function getCountriesWithMaxCitiesCount(countriesArray) {
+        var maxCitiesCount = countriesArray.reduce(function (citiesMaxCount, country) {
+            return Math.max(country.cities.length, citiesMaxCount);
         }, 0);
 
-        return countryObjectsArray.filter(function (country) {
+        return countriesArray.filter(function (country) {
             return country.cities.length === maxCitiesCount;
         });
     }
