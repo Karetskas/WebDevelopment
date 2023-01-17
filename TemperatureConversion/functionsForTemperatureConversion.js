@@ -8,14 +8,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         textFieldElement.style.backgroundColor = "#E00";
 
-        var timerId = setInterval(function () {
-            textFieldElement.value = "0";
+        setTimeout(function () {
             textFieldElement.style.backgroundColor = "#0B0";
         }, 1000);
-
-        setTimeout(function () {
-            clearInterval(timerId);
-        }, 1010);
 
         return false;
     }
@@ -43,9 +38,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         return (colorsArray && colorsArray.length === 4)
             ? "#" +
-                ("0" + parseInt(colorsArray[1], 10).toString(16)).slice(-2) +
-                ("0" + parseInt(colorsArray[2], 10).toString(16)).slice(-2) +
-                ("0" + parseInt(colorsArray[3], 10).toString(16)).slice(-2)
+            ("0" + parseInt(colorsArray[1], 10).toString(16)).slice(-2) +
+            ("0" + parseInt(colorsArray[2], 10).toString(16)).slice(-2) +
+            ("0" + parseInt(colorsArray[3], 10).toString(16)).slice(-2)
             : NaN;
     }
 
@@ -78,14 +73,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function getTemperatureInFahrenheit(temperature) {
-        var result = 1.8 * parseFloat(temperature) + 32;
+    function getTemperatureInFahrenheit(temperatureInCelsius) {
+        var result = 1.8 * parseFloat(temperatureInCelsius) + 32;
 
         return Math.round(result * 100) / 100;
     }
 
-    function getTemperatureInKelvin(temperature) {
-        var result = parseFloat(temperature) + 273.15;
+    function getTemperatureInKelvin(temperatureInCelsius) {
+        var result = parseFloat(temperatureInCelsius) + 273.15;
 
         return Math.round(result * 100) / 100;
     }
@@ -103,16 +98,16 @@ document.addEventListener("DOMContentLoaded", function () {
         var calculationResult;
         var elementWithResult;
 
-        var temperatureCelsiusText = "Celsius" + "<br />" + currentCorrectTemperature;
+        var temperatureCelsiusText = "Celsius<br />" + currentCorrectTemperature;
 
         if (event.currentTarget.name === "conversion_to_degrees_fahrenheit") {
             calculationResult = getTemperatureInFahrenheit(currentCorrectTemperature);
 
-            elementWithResult = getElementsWithResult(temperatureCelsiusText, "Fahrenheit" + "<br />" + calculationResult);
+            elementWithResult = getElementsWithResult(temperatureCelsiusText, "Fahrenheit<br />" + calculationResult);
         } else {
             calculationResult = getTemperatureInKelvin(currentCorrectTemperature);
 
-            elementWithResult = getElementsWithResult(temperatureCelsiusText, "Kelvin" + "<br />" + calculationResult);
+            elementWithResult = getElementsWithResult(temperatureCelsiusText, "Kelvin<br />" + calculationResult);
         }
 
         var resultHistory = document.querySelector(".result_history");
@@ -125,7 +120,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         setElementsColor(containersWithResultsCollection);
 
-        if (elementsWithResultCount > 5) {
+        var maxResultsCount = 5;
+
+        if (elementsWithResultCount > maxResultsCount) {
             containersWithResultsCollection[containersWithResultsCollection.length - 1].remove();
         }
     }
