@@ -93,10 +93,10 @@
         });
     }
 
-    function getObjectWithCountriesPopulation(countryObjectsArray) {
+    function getObjectWithCountriesPopulation(countriesArray) {
         var countriesPopulation = {};
 
-        countryObjectsArray.forEach(function (country) {
+        countriesArray.forEach(function (country) {
             var countryPopulation = country.cities.reduce(function (totalPopulation, city) {
                 return totalPopulation + city.population;
             }, 0);
