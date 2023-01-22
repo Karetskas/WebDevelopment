@@ -6,19 +6,19 @@ $(document).ready(function () {
 
         var rowContainer = $(event.target).closest(".table_row");
 
-        var rowNumber = rowContainer.find("span:first").text() - 1;
-
         rowContainer.remove();
 
         var rowsTable = $(".table_row");
 
         if (rowsTable.length === 0) {
-            $(".heading_no_contacts").css("display", "block");
+            $(".heading_no_contacts").show();
 
             return;
         }
 
-        for (var i = rowNumber; i < rowsTable.length; i++) {
+        var elementIndex = $(".table_row").index(rowContainer);
+
+        for (var i = elementIndex; i < rowsTable.length; i++) {
             rowsTable.eq(i).find("span:first").text(i + 1);
         }
     }
@@ -50,7 +50,8 @@ $(document).ready(function () {
                 .append($("<span></span>")
                     .text(contactObject.phoneNumber)));
 
-        var rowDeleteButton = $("<input class=\"delete_row\" type=\"button\" name=\"delete_contact\" value=\"X\" />");
+        var rowDeleteButton = $("<input class=\"delete_row\" type=\"button\" name=\"delete_contact\" value=\"delete\" />")
+            .on("click", deleteContactInTable);
 
         rowContainer
             .append($("<div></div>")
@@ -61,16 +62,19 @@ $(document).ready(function () {
 
     function hideTooltip(wrapper) {
         wrapper.removeClass("invalid_input_in_text_box");
+
         wrapper.next()
-            .css("display", "none")
-            .css("color", "#E00")
+            .hide()
             .text("");
     }
 
     function clearFormToAddContact() {
         var textBoxes = $(".text_box");
 
-        $(".add_contact").prop("disabled", true);
+        var addContactButton = $(".adding_contact_form>.container_row:last>input");
+        addContactButton.prop("disabled", true);
+        addContactButton.removeClass("add_contact_button_enabled");
+        addContactButton.addClass("add_contact_button_disabled");
 
         textBoxes.each(function () {
             $(this).val("");
@@ -78,7 +82,7 @@ $(document).ready(function () {
         });
     }
 
-    function addContactInTable() {
+    function addContactToTable() {
         var textBoxes = $(".text_box");
 
         var newRow = getNewContactRow({
@@ -90,52 +94,29 @@ $(document).ready(function () {
         clearFormToAddContact();
 
         if ($(".table_row").length === 0) {
-            $(".heading_no_contacts").css("display", "none");
+            $(".heading_no_contacts").hide();
         }
 
         $(".table").append(newRow);
 
-        var lastDeleteButtonRow = $(".delete_row:last");
-
-        lastDeleteButtonRow.on("mousedown",
-            function (event) {
-                $(event.target).addClass("delete_row_button_down");
-            });
-
-        lastDeleteButtonRow.on("mouseup",
-            function (event) {
-                $(event.target).removeClass("delete_row_button_down");
-
-                deleteContactInTable(event);
-            });
-
         textBoxes.eq(0).focus();
     }
 
-    var addContactButton = $(".add_contact");
-
-    addContactButton.on("mousedown", function (event) {
-        $(event.target).addClass("add_contact_button_down");
-    });
-
-    addContactButton.on("mouseup", function (event) {
-        $(event.target).removeClass("add_contact_button_down");
-
-        addContactInTable(event);
-    });
+    $(".adding_contact_form>.container_row:last>input").on("click", addContactToTable);
 
     function showTooltip(wrapper, message, isValid) {
-        var colorMessage = "#0A0";
+        var tooltip = wrapper.next();
+
+        tooltip.addClass("tooltip_successful_validation");
         wrapper.removeClass("invalid_input_in_text_box");
 
         if (!isValid) {
-            colorMessage = "#E00";
+            tooltip.removeClass("tooltip_successful_validation");
             wrapper.addClass("invalid_input_in_text_box");
         }
 
-        wrapper.next()
-            .css("display", "block")
-            .css("color", colorMessage)
+        tooltip
+            .show()
             .html(message);
     }
 
@@ -160,16 +141,26 @@ $(document).ready(function () {
             tooltips += "Space at the end of the line!<br/>";
         }
 
-        if ($(event.target).prop("type") === "tel" && !/^\d+$/.test(text)) {
-            tooltips += "The phone number must be digits!<br/>";
+        if ($(event.target).prop("type") === "tel") {
+            if (!/[0-9]+/.test(text)) {
+                tooltips += "The phone number must contain at least 1 digit!<br/>";
+            }
+
+            if (/[^0-9-+.() ]/.test(text)) {
+                tooltips += "A phone number can contain: (, ), +, -, numbers, dots and spaces!<br/>";
+            }
         }
+
+        var addContactButton = $(".adding_contact_form>.container_row:last>input");
 
         if (tooltips !== "") {
             tooltips = tooltips.slice(0, tooltips.lastIndexOf("<br/>"));
 
             showTooltip($(event.target), tooltips, false);
 
-            $(".add_contact").prop("disabled", true);
+            addContactButton.prop("disabled", true);
+            addContactButton.removeClass("add_contact_button_enabled");
+            addContactButton.addClass("add_contact_button_disabled");
 
             return;
         }
@@ -185,10 +176,12 @@ $(document).ready(function () {
             }
         }
 
-        $(".add_contact").prop("disabled", false);
+        addContactButton.prop("disabled", false);
+        addContactButton.removeClass("add_contact_button_disabled");
+        addContactButton.addClass("add_contact_button_enabled");
     }
 
     $(".text_box").each(function () {
-        this.addEventListener("input", validateTextBox);
+        $(this).on("input", validateTextBox);
     });
 });

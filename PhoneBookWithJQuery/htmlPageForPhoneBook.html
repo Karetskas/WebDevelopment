@@ -14,48 +14,47 @@
     <div class="container">
         <form class="adding_contact_form">
             <h2 class="input_for_title">Add new contact:</h2>
-            <label class="label">First name:</label>
+            <label class="label" for="first_name">First name:</label>
             <div class="container_row">
-                <input class="text_box" type="text" name="first_name" value="" placeholder="enter your first name..." tabindex="1" autofocus />
-                <label class="tooltip"></label>
+                <input class="text_box" id="first_name" type="text" name="first_name" value="" placeholder="enter your first name..." tabindex="1" autofocus />
+                <div class="tooltip"></div>
             </div>
 
-            <label class="label">Last name:</label>
+            <label class="label" for="last_name">Last name:</label>
             <div class="container_row">
-                <input class="text_box" type="text" name="last_name" value="" placeholder="enter your last name..." tabindex="2" />
-                <label class="tooltip"></label>
+                <input class="text_box" id="last_name" type="text" name="last_name" value="" placeholder="enter your last name..." tabindex="2" />
+                <div class="tooltip"></div>
             </div>
 
-            <label class="label">Phone number:</label>
+            <label class="label" for="phone_number">Phone number:</label>
             <div class="container_row">
-                <input class="text_box" type="tel" name="phone_number" value="" placeholder="enter your phone number..." tabindex="3" />
-                <label class="tooltip"></label>
+                <input class="text_box" id="phone_number" type="tel" name="phone_number" value="" placeholder="enter your phone number..." tabindex="3" />
+                <div class="tooltip"></div>
             </div>
 
             <div class="container_row">
-                <input class="add_contact" type="button" name="add_new_contact" value="Add contact" disabled tabindex="4" />
+                <input class="add_contact_button_disabled" type="button" name="add_new_contact" value="Add contact" disabled tabindex="4" />
             </div>
         </form>
 
         <div class="table">
             <div class="table_header_container">
                 <div>
-                    <span>№</span>
+                    №
                 </div>
                 <div>
-                    <span>Last name</span>
+                    Last name
                 </div>
                 <div>
-                    <span>First name</span>
+                    First name
                 </div>
                 <div>
-                    <span>Phone number</span>
+                    Phone number
                 </div>
                 <div></div>
             </div>
 
             <h3 class="heading_no_contacts">Phone book is empty...</h3>
-
         </div>
     </div>
 </body>

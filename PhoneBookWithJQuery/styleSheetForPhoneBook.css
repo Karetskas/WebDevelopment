@@ -45,6 +45,12 @@ body {
     margin: 5px 0 10px;
 }
 
+    .container_row:last-child {
+        margin: 5px 0 0;
+        width: auto;
+        height: auto;
+    }
+
 .label {
     text-shadow: 5px 5px 10px #888;
 }
@@ -61,13 +67,7 @@ body {
     background: #DAA;
 }
 
-.container_row:last-child {
-    margin: 5px 0 0;
-    width: auto;
-    height: auto;
-}
-
-.add_contact {
+.add_contact_button_enabled {
     display: block;
     margin: 0 auto;
     padding: 5px 25px;
@@ -77,15 +77,31 @@ body {
     background: #6C6;
 }
 
-    .add_contact:hover {
+    .add_contact_button_enabled:hover {
         cursor: pointer;
         background: #6D6;
     }
 
-.add_contact_button_down:hover {
-    cursor: pointer;
-    background: #6A6;
-    color: #FFF;
+    .add_contact_button_enabled:active {
+        display: block;
+        margin: 0 auto;
+        padding: 5px 25px;
+        width: auto;
+        font-weight: 600;
+        border-radius: 10px;
+        background: #6A6;
+        color: #FFF;
+    }
+
+.add_contact_button_disabled {
+    display: block;
+    margin: 0 auto;
+    padding: 5px 25px;
+    width: auto;
+    font-weight: 600;
+    border-radius: 10px;
+    background: #AAA;
+    color: #000;
 }
 
 .tooltip {
@@ -94,6 +110,10 @@ body {
     font-style: italic;
     text-align: center;
     color: #E00;
+}
+
+.tooltip_successful_validation {
+    color: #0A0;
 }
 
 .heading_no_contacts {
@@ -106,6 +126,7 @@ body {
     margin-top: 10px;
     width: 100%;
     font-size: 90%;
+    word-break: break-all;
     text-align: center;
     border: none;
 }
@@ -133,11 +154,11 @@ body {
 
         .table_header_container > div:last-child {
             flex: 0 1 10%;
+            min-width: 65px;
         }
 
 .table_row {
     display: flex;
-    word-break: break-all;
 }
 
     .table_row > div {
@@ -154,6 +175,7 @@ body {
 
         .table_row > div:first-child {
             flex: 0 1 12%;
+            min-width: 28px;
         }
 
         .table_row > div:last-child {
@@ -174,11 +196,13 @@ body {
         background: #F88;
     }
 
-.delete_row_button_down:hover {
-    cursor: pointer;
-    color: #FFF;
-    background: #606;
-}
+    .delete_row:active {
+        display: block;
+        flex-grow: 1;
+        border-radius: 5px;
+        color: #FFF;
+        background: #606;
+    }
 
 @media(min-width: 576px) {
     .adding_contact_form {
