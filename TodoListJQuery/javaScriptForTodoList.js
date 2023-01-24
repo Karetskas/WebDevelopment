@@ -13,38 +13,35 @@ $(document).ready(function () {
         return element;
     }
 
-    function exitEditMode(containerTask, isTaskSaving) {
-        var textBoxElement = containerTask.find(".text_field");
+    function exitEditMode(taskContainer, isTaskSaving) {
+        var textBoxElement = taskContainer.find(".text_field");
 
-        var paragraph = containerTask.find(".task_description");
+        var paragraph = taskContainer.find(".task_description");
 
         if (isTaskSaving) {
-            paragraph.text(textBoxElement.val());
+            paragraph.text(textBoxElement.val().trim());
         }
 
-        hideTooltip(containerTask.find(".text_container"));
+        hideTooltip(taskContainer.find(".text_container"));
 
         textBoxElement.remove();
 
-        paragraph.css("display", "block");
+        paragraph.show();
 
         var editButton = getElementWrapper("<input/>", {
-            class: "button",
+            class: "button edit",
             type: "button",
             value: "edit"
         });
 
-        var buttons = containerTask.find(".button");
+        taskContainer.find(".button.save").remove();
+        taskContainer.find(".button.cancel").remove();
 
-        for (var i = 0; i < 2; i++) {
-            buttons.eq(i).remove();
-        }
-
-        containerTask
+        taskContainer
             .find(".buttons_container")
             .prepend(editButton);
 
-        editButton.on("click", editTask);
+        editButton.click(editTask);
     }
 
     function saveTask(event) {
@@ -52,7 +49,7 @@ $(document).ready(function () {
 
         var textBoxElement = taskElement.find(".text_field");
 
-        if (!isValidText(textBoxElement.val(), textBoxElement)) {
+        if (!validateText(textBoxElement.val(), textBoxElement)) {
             textBoxElement.val("");
             textBoxElement.focus();
 
@@ -84,7 +81,7 @@ $(document).ready(function () {
             value: paragraph.text()
         });
 
-        paragraph.css("display", "none");
+        paragraph.hide();
 
         taskElement
             .find(".text_container")
@@ -93,17 +90,17 @@ $(document).ready(function () {
         var buttonsContainer = taskElement.find(".buttons_container");
 
         buttonsContainer
-            .find(".button:first")
+            .find(".button.edit")
             .remove();
 
         var cancelButton = getElementWrapper("<input/>", {
-            class: "button",
+            class: "button cancel",
             type: "button",
             value: "cancel"
         });
 
         var saveButton = getElementWrapper("<input/>", {
-            class: "button",
+            class: "button save",
             type: "button",
             value: "save"
         });
@@ -112,10 +109,8 @@ $(document).ready(function () {
             .prepend(cancelButton)
             .prepend(saveButton);
 
-        var buttons = buttonsContainer.find(".button");
-
-        buttons.eq(0).on("click", saveTask);
-        buttons.eq(1).on("click", cancelTaskEditing);
+        buttonsContainer.find(".button.save").click(saveTask);
+        buttonsContainer.find(".button.cancel").click(cancelTaskEditing);
     }
 
     function getNewTask(taskText) {
@@ -125,13 +120,13 @@ $(document).ready(function () {
         var textContainer = getElementWrapper("<div></div>", { class: "text_container" });
 
         var editButton = getElementWrapper("<input/>", {
-            class: "button",
+            class: "button edit",
             type: "button",
             value: "edit"
         });
 
         var deleteButton = getElementWrapper("<input/>", {
-            class: "button",
+            class: "button delete",
             type: "button",
             value: "delete"
         });
@@ -150,31 +145,31 @@ $(document).ready(function () {
     function showTooltip(textContainer) {
         textContainer
             .find(".tooltip")
-            .css("display", "block");
+            .show();
 
         textContainer
             .find(".text_field")
-            .css("borderColor", "#C00");
+            .addClass("invalid_input");
 
         textContainer
             .parent()
             .find(".buttons_container")
-            .css("justifyContent", "flex-start");
+            .addClass("align_buttons_to_top");
     }
 
     function hideTooltip(textContainer) {
         textContainer
             .find(".tooltip")
-            .css("display", "none");
+            .hide();
 
         textContainer
             .find(".text_field")
-            .css("borderColor", "#66A");
+            .removeClass("invalid_input");
 
         textContainer
             .parent()
             .find(".buttons_container")
-            .css("justify-content", "center");
+            .removeClass("align_buttons_to_top");
     }
 
     function disableInputValidation(event) {
@@ -185,7 +180,7 @@ $(document).ready(function () {
         }
     }
 
-    function isValidText(taskText, textBoxElement) {
+    function validateText(taskText, textBoxElement) {
         if (taskText === "" || taskText.trim().length === 0) {
             showTooltip(textBoxElement.parent());
 
@@ -198,23 +193,21 @@ $(document).ready(function () {
     }
 
     function addTask() {
-        var textBoxElement = $(".text_field").focus();
+        var textBoxElement = $(".text_field:first").focus();
 
-        var taskText = textBoxElement.val();
+        var taskText = textBoxElement.val().trim();
 
         textBoxElement.val("");
 
-        if (!isValidText(taskText, textBoxElement)) {
+        if (!validateText(taskText, textBoxElement)) {
             return;
         }
 
         var task = getNewTask(taskText);
-        $("body").append(task);
+        $(".task_container").append(task);
 
-        var buttons = task.find(".button");
-
-        buttons.eq(0).on("click", editTask);
-        buttons.eq(1).on("click", function (event) {
+        task.find(".button.edit").click(editTask);
+        task.find(".button.delete").click(function (event) {
             $(event.target)
                 .parent()
                 .parent()
@@ -222,5 +215,5 @@ $(document).ready(function () {
         });
     }
 
-    $(".button").on("click", addTask);
+    $(".button.add").click(addTask);
 });

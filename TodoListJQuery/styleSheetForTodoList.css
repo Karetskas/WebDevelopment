@@ -47,6 +47,10 @@ body {
     background: #222;
 }
 
+.invalid_input {
+    border: 1px dashed #C00;
+}
+
 .tooltip {
     display: none;
     color: #C00;
@@ -58,6 +62,10 @@ body {
     flex-direction: column;
     justify-content: center;
     margin-left: 10px;
+}
+
+.align_buttons_to_top {
+    justify-content: flex-start;
 }
 
 .button {
