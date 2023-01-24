@@ -13,16 +13,16 @@ document.addEventListener("DOMContentLoaded", function () {
         return element;
     }
 
-    function exitEditMode(containerTask, isTaskSaving) {
-        var textBoxElement = containerTask.querySelector(".text_field");
+    function exitEditMode(taskContainer, isTaskSaving) {
+        var textBoxElement = taskContainer.querySelector(".text_field");
 
-        var paragraph = containerTask.querySelector(".task_description");
+        var paragraph = taskContainer.querySelector(".task_description");
 
         if (isTaskSaving) {
             paragraph.textContent = textBoxElement.value.trim();
         }
 
-        hideTooltip(containerTask.firstChild);
+        hideTooltip(taskContainer.firstChild);
 
         textBoxElement.remove();
 
@@ -34,13 +34,10 @@ document.addEventListener("DOMContentLoaded", function () {
             value: "edit"
         });
 
-        var buttons = containerTask.querySelectorAll(".button");
+        taskContainer.querySelector(".button.save").remove();
+        taskContainer.querySelector(".button.cancel").remove();
 
-        for (var i = 0; i < 2; i++) {
-            buttons[i].remove();
-        }
-
-        var buttonsContainer = containerTask.querySelector(".buttons_container");
+        var buttonsContainer = taskContainer.querySelector(".buttons_container");
         buttonsContainer.prepend(editButton);
 
         editButton.addEventListener("click", editTask);
@@ -202,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         var task = getNewTask(taskText);
-        document.body.appendChild(task);
+        document.querySelector(".task_container").append(task);
 
         task.querySelector(".button.edit").addEventListener("click", editTask);
         task.querySelector(".button.delete").addEventListener("click", deleteTask);
