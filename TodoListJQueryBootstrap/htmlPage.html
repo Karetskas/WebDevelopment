@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>TODO list</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="styleSheet.css" rel="stylesheet" />
+    <script src="node_modules/jquery/dist/jquery.js" defer></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="javaScript.js" defer></script>
+</head>
+<body class="bg-black p-1">
+    <div class="h1 text-decoration-underline text-white text-center">TODO list</div>
+
+    <div class="container mb-3 px-1 py-3 rounded-3 bg-info bg-opacity-25">
+        <div class="row row-cols-2 gx-2 p-1">
+            <div class="d-flex justify-content-center position-relative col-8 text_container">
+                <input class="form-control text-white border border-light bg-black text_field valid_text" type="text" placeholder="Enter the task here..." autofocus />
+                <div class="d-none text-center invalid-tooltip">
+                    The field must not be empty or contain only spaces!
+                </div>
+            </div>
+
+            <div class="col-4 buttons_container">
+                <input class="d-block w-100 btn btn-primary add" type="button" value="add" />
+            </div>
+        </div>
+    </div>
+
+    <div class="task_container"></div>
+</body>
+</html>
