@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-document.addEventListener("DOMContentLoaded", function () {
+(function () {
     function Person(name, age) {
         this.name = name;
         this.age = age;
@@ -20,6 +20,34 @@ document.addEventListener("DOMContentLoaded", function () {
         new Person("Alan", 9)
     ];
 
+    function printObjectsArrayToConsole(collection) {
+        _.each(collection, function (person) {
+            var text = "";
+
+            for (var property in person) {
+                if (person.hasOwnProperty(property)) {
+                    text += property + ": " + person[property] + "; ";
+                }
+            }
+                
+            console.log(text.slice(0, text.length - 2));
+        });
+    }
+
+    function printArrayToConsole(collection) {
+        collection.forEach(function(item) {
+            console.log(item);
+        });
+    }
+
+    function printObjectToConsole(collection) {
+        for (var property in collection) {
+            if (collection.hasOwnProperty(property)) {
+                console.log(property + ": " + collection[property] + " people");
+            }
+        }
+    }
+
     function printToConsole(message, collection) {
         console.log("#".repeat(50));
         console.log(message);
@@ -29,22 +57,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (_.isArray(collection)) {
-            _.each(collection, function (person) {
-                console.log("name: " + person.name + "; age: " + person.age);
-            });
-        } else {
-            for (var property in collection) {
-                if (collection.hasOwnProperty(property)) {
-                    console.log(property + ": " + collection[property] + " people");
-                }
+            if (_.isObject(collection[0])) {
+                printObjectsArrayToConsole(collection);
+            } else {
+                printArrayToConsole(collection);
             }
+        } else {
+            printObjectToConsole(collection);
         }
 
         console.log("#".repeat(50));
     }
 
-    var agesSum = _.reduce(people, function (memo, person) {
-        return memo + person.age;
+    var agesSum = _.reduce(people, function (peopleAgesSum, person) {
+        return peopleAgesSum + person.age;
     }, 0);
 
     var peopleAverageAge = (agesSum / _.size(people)).toFixed(2);
@@ -55,9 +81,8 @@ document.addEventListener("DOMContentLoaded", function () {
         .filter(function (person) {
             return person.age >= 20 && person.age <= 30;
         })
-        .sortBy(function (person) {
-            return person.age;
-        }).value();
+        .sortBy("age")
+        .value();
 
     printToConsole("2. Get a list of people aged 20 to 30 inclusive, sort them in ascending order age.", peopleInRange20To30Years);
 
@@ -65,22 +90,15 @@ document.addEventListener("DOMContentLoaded", function () {
         .filter(function (person) {
             return person.age >= 20 && person.age <= 30;
         })
-        .sortBy(function (person) {
-            return Math.min(person.age);
-        })
+        .pluck("name")
+        .unique()
+        .sortBy()
         .reverse()
-        .unique(true, function (person) {
-            return person.name;
-        })
         .value();
 
     printToConsole("3. Get a list of unique names of people with age from 20 to 30 inclusive, sort it by descending.", peopleInRange20To30WithUniqueNames);
 
-    var peopleWithSameNameCount = _.chain(people)
-        .countBy(function (person) {
-            return person.name;
-        })
-        .value();
+    var peopleWithSameNameCount = _.countBy(people, "name");
 
     printToConsole("4. Get an object in which the names will be the keys people, and the values are the number of people with this name.", peopleWithSameNameCount);
-});
+})();
