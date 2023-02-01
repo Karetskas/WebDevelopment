@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
             paragraph.textContent = textBoxElement.value.trim();
         }
 
-        hideTooltip(taskContainer.firstChild);
+        hideErrorMessage(taskContainer.firstChild);
 
         textBoxElement.remove();
 
@@ -43,28 +43,8 @@ document.addEventListener("DOMContentLoaded", function () {
         editButton.addEventListener("click", editTask);
     }
 
-    function saveTask(event) {
-        var taskElement = event.target.parentElement.parentElement;
-
-        var textBoxElement = taskElement.querySelector(".text_field");
-
-        if (!validateText(textBoxElement.value, textBoxElement)) {
-            textBoxElement.value = "";
-
-            return;
-        }
-
-        exitEditMode(taskElement, true);
-    }
-
-    function cancelTaskEditing(event) {
-        var taskElement = event.target.parentElement.parentElement;
-
-        exitEditMode(taskElement, false);
-    }
-
     function editTask(event) {
-        var taskElement = event.target.parentElement.parentElement;
+        var taskElement = event.target.closest(".container");
 
         var paragraph = taskElement.querySelector(".task_description");
 
@@ -99,14 +79,34 @@ document.addEventListener("DOMContentLoaded", function () {
         buttonsContainer.prepend(cancelButton);
         buttonsContainer.prepend(saveButton);
 
-        buttonsContainer.querySelector(".button.save").addEventListener("click", saveTask);
-        buttonsContainer.querySelector(".button.cancel").addEventListener("click", cancelTaskEditing);
-    }
+        buttonsContainer.querySelector(".button.save").addEventListener("click", function (event) {
+            var taskElement = event.target.closest(".container");
 
-    function deleteTask(event) {
-        var taskElement = event.target.parentElement.parentElement;
+            var textBoxElement = taskElement.querySelector(".text_field");
 
-        taskElement.remove();
+            if (!validateText(textBoxElement.value, textBoxElement)) {
+                textBoxElement.value = "";
+
+                return;
+            }
+
+            exitEditMode(taskElement, true);
+        });
+
+        buttonsContainer.querySelector(".button.cancel").addEventListener("click", function (event) {
+            var taskElement = event.target.closest(".container");
+
+            exitEditMode(taskElement, false);
+        });
+
+        textContainer.querySelector(".text_field")
+            .addEventListener("keyup", function (event) {
+                if (event.key === "Enter") {
+                    event.target.closest(".container")
+                        .querySelector(".button.save")
+                        .click();
+                }
+            });
     }
 
     function getNewTask(taskText) {
@@ -116,8 +116,8 @@ document.addEventListener("DOMContentLoaded", function () {
         var textContainer = getElement("div", { class: "text_container" });
         textContainer.append(paragraph);
 
-        var tooltip = document.querySelector(".tooltip").cloneNode(true);
-        textContainer.append(tooltip);
+        var errorMessage = document.querySelector(".error_message").cloneNode(true);
+        textContainer.append(errorMessage);
 
         var editButton = getElement("input", {
             class: "button edit",
@@ -143,9 +143,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return container;
     }
 
-    function showTooltip(textContainer) {
-        var tooltip = textContainer.querySelector(".tooltip");
-        tooltip.style.display = "block";
+    function showErrorMessage(textContainer) {
+        var errorMessage = textContainer.querySelector(".error_message");
+        errorMessage.style.display = "block";
 
         var textField = textContainer.querySelector(".text_field");
         textField.classList.add("invalid_input");
@@ -154,9 +154,9 @@ document.addEventListener("DOMContentLoaded", function () {
         buttonsContainer.classList.add("align_buttons_to_top");
     }
 
-    function hideTooltip(textContainer) {
-        var tooltip = textContainer.querySelector(".tooltip");
-        tooltip.style.display = "none";
+    function hideErrorMessage(textContainer) {
+        var errorMessage = textContainer.querySelector(".error_message");
+        errorMessage.style.display = "none";
 
         var textField = textContainer.querySelector(".text_field");
         textField.classList.remove("invalid_input");
@@ -167,15 +167,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function disableInputValidation(event) {
         if (event.target.value.trim().length !== 0) {
-            hideTooltip(event.target.parentElement);
+            hideErrorMessage(event.target.parentElement);
 
             event.target.removeEventListener("input", disableInputValidation);
         }
     }
 
     function validateText(taskText, textBoxElement) {
-        if (taskText === "" || taskText.trim().length === 0) {
-            showTooltip(textBoxElement.parentElement);
+        if (taskText.trim().length === 0) {
+            showErrorMessage(textBoxElement.parentElement);
 
             textBoxElement.addEventListener("input", disableInputValidation);
 
@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return true;
     }
 
-    function addTask() {
+    document.querySelector(".button.add").addEventListener("click", function () {
         var textBoxElement = document.querySelector(".text_field");
 
         var taskText = textBoxElement.value.trim();
@@ -199,12 +199,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         var task = getNewTask(taskText);
-        document.querySelector(".task_container").append(task);
+        document.querySelector(".tasks_container").append(task);
 
         task.querySelector(".button.edit").addEventListener("click", editTask);
-        task.querySelector(".button.delete").addEventListener("click", deleteTask);
-    }
 
-    var addButton = document.querySelector(".button.add");
-    addButton.addEventListener("click", addTask);
+        task.querySelector(".button.delete").addEventListener("click", function (event) {
+            var taskElement = event.target.closest(".container");
+
+            taskElement.remove();
+        });
+    });
+
+    document.querySelector(".text_field").addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+            event.target
+                .closest(".container")
+                .querySelector(".button.add")
+                .click();
+        }
+    });
 });
