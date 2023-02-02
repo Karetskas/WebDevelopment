@@ -51,7 +51,7 @@ body {
     border: 1px dashed #C00;
 }
 
-.tooltip {
+.error_message {
     display: none;
     color: #C00;
 }

@@ -22,7 +22,7 @@ $(document).ready(function () {
             paragraph.text(textBoxElement.val().trim());
         }
 
-        hideTooltip(taskContainer.find(".text_container"));
+        hideErrorMessage(taskContainer.find(".text_container"));
 
         textBoxElement.remove();
 
@@ -44,33 +44,8 @@ $(document).ready(function () {
         editButton.click(editTask);
     }
 
-    function saveTask(event) {
-        var taskElement = $(event.target).parent().parent();
-
-        var textBoxElement = taskElement.find(".text_field");
-
-        if (!validateText(textBoxElement.val(), textBoxElement)) {
-            textBoxElement.val("");
-            textBoxElement.focus();
-
-            return;
-        }
-
-        exitEditMode(taskElement, true);
-    }
-
-    function cancelTaskEditing(event) {
-        var taskElement = $(event.target)
-            .parent()
-            .parent();
-
-        exitEditMode(taskElement, false);
-    }
-
     function editTask(event) {
-        var taskElement = $(event.target)
-            .parent()
-            .parent();
+        var taskElement = $(event.target).closest(".container");
 
         var paragraph = taskElement
             .find(".task_description");
@@ -83,9 +58,8 @@ $(document).ready(function () {
 
         paragraph.hide();
 
-        taskElement
-            .find(".text_container")
-            .prepend(elementEditTask);
+        var textContainer = taskElement.find(".text_container");
+        textContainer.prepend(elementEditTask);
 
         var buttonsContainer = taskElement.find(".buttons_container");
 
@@ -109,8 +83,35 @@ $(document).ready(function () {
             .prepend(cancelButton)
             .prepend(saveButton);
 
-        buttonsContainer.find(".button.save").click(saveTask);
-        buttonsContainer.find(".button.cancel").click(cancelTaskEditing);
+        buttonsContainer.find(".button.save").click(function (event) {
+            var taskElement = $(event.target).closest(".container");
+
+            var textBoxElement = taskElement.find(".text_field");
+
+            if (!validateText(textBoxElement.val(), textBoxElement)) {
+                textBoxElement.val("");
+                textBoxElement.focus();
+
+                return;
+            }
+
+            exitEditMode(taskElement, true);
+        });
+
+        buttonsContainer.find(".button.cancel").click(function (event) {
+            var taskElement = $(event.target).closest(".container");
+
+            exitEditMode(taskElement, false);
+        });
+
+        textContainer.find(".text_field").keyup(function (event) {
+            if (event.key === "Enter") {
+                $(event.target)
+                    .closest(".container")
+                    .find(".button.save")
+                    .trigger("click");
+            }
+        });
     }
 
     function getNewTask(taskText) {
@@ -136,15 +137,15 @@ $(document).ready(function () {
         return getElementWrapper("<div></div>", { class: "container" })
             .append(textContainer
                 .append(paragraph)
-                .append($(".tooltip:first").clone()))
+                .append($(".error_message:first").clone()))
             .append(buttonsContainer
                 .append(editButton)
                 .append(deleteButton));
     }
 
-    function showTooltip(textContainer) {
+    function showErrorMessage(textContainer) {
         textContainer
-            .find(".tooltip")
+            .find(".error_message")
             .show();
 
         textContainer
@@ -152,14 +153,14 @@ $(document).ready(function () {
             .addClass("invalid_input");
 
         textContainer
-            .parent()
+            .closest(".container")
             .find(".buttons_container")
             .addClass("align_buttons_to_top");
     }
 
-    function hideTooltip(textContainer) {
+    function hideErrorMessage(textContainer) {
         textContainer
-            .find(".tooltip")
+            .find(".error_message")
             .hide();
 
         textContainer
@@ -167,24 +168,24 @@ $(document).ready(function () {
             .removeClass("invalid_input");
 
         textContainer
-            .parent()
+            .closest(".container")
             .find(".buttons_container")
             .removeClass("align_buttons_to_top");
     }
 
     function disableInputValidation(event) {
         if ($(event.target).val().trim().length !== 0) {
-            hideTooltip($(event.target).parent());
+            hideErrorMessage($(event.target).closest(".text_container"));
 
-            event.target.removeEventListener("input", disableInputValidation);
+            $(event.target).on("input", disableInputValidation);
         }
     }
 
     function validateText(taskText, textBoxElement) {
-        if (taskText === "" || taskText.trim().length === 0) {
-            showTooltip(textBoxElement.parent());
+        if (taskText.trim().length === 0) {
+            showErrorMessage(textBoxElement.closest(".text_container"));
 
-            textBoxElement[0].addEventListener("input", disableInputValidation);
+            textBoxElement.on("input", disableInputValidation);
 
             return false;
         }
@@ -192,7 +193,7 @@ $(document).ready(function () {
         return true;
     }
 
-    function addTask() {
+    $(".button.add").click(function () {
         var textBoxElement = $(".text_field:first").focus();
 
         var taskText = textBoxElement.val().trim();
@@ -204,16 +205,22 @@ $(document).ready(function () {
         }
 
         var task = getNewTask(taskText);
-        $(".task_container").append(task);
+        $(".tasks_container").append(task);
 
         task.find(".button.edit").click(editTask);
         task.find(".button.delete").click(function (event) {
             $(event.target)
-                .parent()
-                .parent()
+                .closest(".container")
                 .remove();
         });
-    }
+    });
 
-    $(".button.add").click(addTask);
+    $(".text_field:first").keyup(function (event) {
+        if (event.key === "Enter") {
+            $(event.target)
+                .closest(".container")
+                .find(".button.add")
+                .trigger("click");
+        }
+    });
 });
