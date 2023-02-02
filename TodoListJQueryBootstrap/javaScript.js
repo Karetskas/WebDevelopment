@@ -22,7 +22,7 @@ $(document).ready(function () {
             paragraph.text(textBoxElement.val().trim());
         }
 
-        hideTooltip(taskContainer.find(".text_container"));
+        hideErrorTooltip(taskContainer.find(".text_container"));
 
         textBoxElement.remove();
 
@@ -46,33 +46,8 @@ $(document).ready(function () {
         editButton.click(editTask);
     }
 
-    function saveTask(event) {
-        var taskElement = $(event.target).parent().parent();
-
-        var textBoxElement = taskElement.find(".text_field");
-
-        if (!validateText(textBoxElement.val(), textBoxElement)) {
-            textBoxElement.val("");
-            textBoxElement.focus();
-
-            return;
-        }
-
-        exitEditMode(taskElement, true);
-    }
-
-    function cancelTaskEditing(event) {
-        var taskElement = $(event.target)
-            .parent()
-            .parent();
-
-        exitEditMode(taskElement, false);
-    }
-
     function editTask(event) {
-        var taskElement = $(event.target)
-            .parent()
-            .parent();
+        var taskElement = $(event.target).closest(".container");
 
         var paragraph = taskElement
             .find(".task_description");
@@ -87,11 +62,8 @@ $(document).ready(function () {
             .removeClass("d-block")
             .addClass("d-none");
 
-        taskElement
-            .find(".text_container")
-            .prepend(elementEditTask);
-
-        taskElement
+        var textContainer = taskElement.find(".text_container");
+        textContainer.prepend(elementEditTask)
             .find(".text_field")
             .focus();
 
@@ -117,8 +89,35 @@ $(document).ready(function () {
             .prepend(cancelButton)
             .prepend(saveButton);
 
-        buttonsContainer.find(".btn.save").click(saveTask);
-        buttonsContainer.find(".btn.cancel").click(cancelTaskEditing);
+        buttonsContainer.find(".btn.save").click(function (event) {
+            var taskElement = $(event.target).closest(".container");
+
+            var textBoxElement = taskElement.find(".text_field");
+
+            if (!validateText(textBoxElement.val(), textBoxElement)) {
+                textBoxElement.val("");
+                textBoxElement.focus();
+
+                return;
+            }
+
+            exitEditMode(taskElement, true);
+        });
+
+        buttonsContainer.find(".btn.cancel").click(function (event) {
+            var taskElement = $(event.target).closest(".container");
+
+            exitEditMode(taskElement, false);
+        });
+
+        textContainer.find(".text_field").keyup(function (event) {
+            if (event.key === "Enter") {
+                $(event.target)
+                    .closest(".container")
+                    .find(".btn.save")
+                    .trigger("click");
+            }
+        });
     }
 
     function getNewTask(taskText) {
@@ -127,10 +126,10 @@ $(document).ready(function () {
         });
         paragraph.text(taskText);
 
-        var textTooltip = getElementWrapper("<div></div>", {
+        var textErrorTooltip = getElementWrapper("<div></div>", {
             class: "d-none text-center invalid-tooltip"
         });
-        textTooltip.text("The field must not be empty or contain only spaces!");
+        textErrorTooltip.text("The field must not be empty or contain only spaces!");
 
         var textContainer = getElementWrapper("<div></div>", {
             class: "d-flex align-self-center justify-content-center position-relative col-8 text_container"
@@ -160,13 +159,13 @@ $(document).ready(function () {
             .append(row
                 .append(textContainer
                     .append(paragraph)
-                    .append(textTooltip))
+                    .append(textErrorTooltip))
                 .append(buttonsContainer
                     .append(editButton)
                     .append(deleteButton)));
     }
 
-    function showTooltip(textContainer) {
+    function showErrorTooltip(textContainer) {
         textContainer
             .find(".invalid-tooltip")
             .removeClass("d-none")
@@ -180,7 +179,7 @@ $(document).ready(function () {
             .addClass("invalid_text");
     }
 
-    function hideTooltip(textContainer) {
+    function hideErrorTooltip(textContainer) {
         textContainer
             .find(".invalid-tooltip")
             .removeClass("d-block")
@@ -196,17 +195,17 @@ $(document).ready(function () {
 
     function disableInputValidation(event) {
         if ($(event.target).val().trim().length !== 0) {
-            hideTooltip($(event.target).parent());
+            hideErrorTooltip($(event.target).closest(".text_container"));
 
-            event.target.removeEventListener("input", disableInputValidation);
+            (event.target).on("input", disableInputValidation);
         }
     }
 
     function validateText(taskText, textBoxElement) {
-        if (taskText === "" || taskText.trim().length === 0) {
-            showTooltip(textBoxElement.parent());
+        if (taskText.trim().length === 0) {
+            showErrorTooltip(textBoxElement.closest(".text_container"));
 
-            textBoxElement[0].addEventListener("input", disableInputValidation);
+            textBoxElement.on("input", disableInputValidation);
 
             return false;
         }
@@ -214,7 +213,7 @@ $(document).ready(function () {
         return true;
     }
 
-    function addTask() {
+    $(".btn.add").click(function () {
         var textBoxElement = $(".text_field:first").focus();
 
         var taskText = textBoxElement.val().trim();
@@ -226,17 +225,22 @@ $(document).ready(function () {
         }
 
         var task = getNewTask(taskText);
-        $(".task_container").append(task);
+        $(".tasks_container").append(task);
 
         task.find(".btn.edit").click(editTask);
         task.find(".btn.delete").click(function (event) {
             $(event.target)
-                .parent()
-                .parent()
-                .parent()
+                .closest(".container")
                 .remove();
         });
-    }
+    });
 
-    $(".btn.add").click(addTask);
+    $(".text_field:first").keyup(function (event) {
+        if (event.key === "Enter") {
+            $(event.target)
+                .closest(".container")
+                .find(".btn.add")
+                .trigger("click");
+        }
+    });
 });
