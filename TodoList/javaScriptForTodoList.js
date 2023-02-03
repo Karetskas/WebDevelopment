@@ -99,14 +99,13 @@ document.addEventListener("DOMContentLoaded", function () {
             exitEditMode(taskElement, false);
         });
 
-        textContainer.querySelector(".text_field")
-            .addEventListener("keyup", function (event) {
-                if (event.key === "Enter") {
-                    event.target.closest(".container")
-                        .querySelector(".button.save")
-                        .click();
-                }
-            });
+        textContainer.querySelector(".text_field").addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                event.target.closest(".container")
+                    .querySelector(".button.save")
+                    .click();
+            }
+        });
     }
 
     function getNewTask(taskText) {
