@@ -53,7 +53,7 @@ $(document).ready(function () {
             .find(".task_description");
 
         var elementEditTask = getElementWrapper("<input/>", {
-            class: "form-control align-self-center text-white border border-light bg-black text_field valid_text",
+            class: "form-control align-self-center text-white border border-light bg-black text_field",
             type: "text",
             value: paragraph.text()
         });
@@ -89,9 +89,7 @@ $(document).ready(function () {
             .prepend(cancelButton)
             .prepend(saveButton);
 
-        buttonsContainer.find(".btn.save").click(function (event) {
-            var taskElement = $(event.target).closest(".container");
-
+        buttonsContainer.find(".btn.save").click(function () {
             var textBoxElement = taskElement.find(".text_field");
 
             if (!validateText(textBoxElement.val(), textBoxElement)) {
@@ -104,17 +102,13 @@ $(document).ready(function () {
             exitEditMode(taskElement, true);
         });
 
-        buttonsContainer.find(".btn.cancel").click(function (event) {
-            var taskElement = $(event.target).closest(".container");
-
+        buttonsContainer.find(".btn.cancel").click(function () {
             exitEditMode(taskElement, false);
         });
 
-        textContainer.find(".text_field").keyup(function (event) {
+        textContainer.find(".text_field").keyup(function () {
             if (event.key === "Enter") {
-                $(event.target)
-                    .closest(".container")
-                    .find(".btn.save")
+                taskElement.find(".btn.save")
                     .trigger("click");
             }
         });
@@ -175,7 +169,6 @@ $(document).ready(function () {
             .find(".text_field")
             .removeClass("border border-light")
             .addClass("border border-danger")
-            .removeClass("valid_text")
             .addClass("invalid_text");
     }
 
@@ -189,15 +182,16 @@ $(document).ready(function () {
             .find(".text_field")
             .removeClass("border border-danger")
             .addClass("border border-light")
-            .removeClass("invalid_text")
-            .addClass("valid_text");
+            .removeClass("invalid_text");
     }
 
     function disableInputValidation(event) {
-        if ($(event.target).val().trim().length !== 0) {
-            hideErrorTooltip($(event.target).closest(".text_container"));
+        var currentElement = $(event.target);
 
-            (event.target).on("input", disableInputValidation);
+        if (currentElement.val().trim().length !== 0) {
+            hideErrorTooltip(currentElement.closest(".text_container"));
+
+            currentElement.on("input", disableInputValidation);
         }
     }
 
