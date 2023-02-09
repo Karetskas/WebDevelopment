@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>TODO list</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="styleSheet.css" rel="stylesheet" />
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js" defer></script>
+    <script src="node_modules/vue/dist/vue.js" defer></script>
+    <script src="javaScript.js" defer></script>
+</head>
+<body class="bg-black p-1">
+    <div id="app">
+        <div class="h1 text-decoration-underline text-white text-center">TODO list</div>
+
+        <div class="container mb-3 px-1 py-3 rounded-3 bg-info bg-opacity-25">
+            <div class="row gx-2 p-1">
+                <div class="d-flex justify-content-center position-relative col-8 text_container">
+                    <input class="form-control text-white border bg-black text_field"
+                           type="text"
+                           placeholder="Enter the task here..."
+                           ref="enterTask"
+                           v-model.trim="taskText"
+                           @keyup.enter="addTask"
+                           :class="{'border-light': isValidText, 'border-danger': !isValidText, invalidText: !isValidText}" />
+                    <div class="text-center invalid-tooltip"
+                         :class="{'d-none': isValidText, 'd-block': !isValidText}">
+                        The field must not be empty or contain only spaces!
+                    </div>
+                </div>
+
+                <div class="col-4 buttons_container">
+                    <input class="d-block w-100 btn btn-primary add"
+                           type="button"
+                           value="add"
+                           @click="addTask" />
+                </div>
+            </div>
+        </div>
+
+        <div class="tasks_container">
+            <div class="container mb-2 px-1 rounded-3 bg-info bg-opacity-25"
+                 v-for="(task, index) in tasks"
+                 v-cloak
+                 :key="task.id">
+                <div class="row gx-2 p-1">
+                    <div class="d-flex align-self-center justify-content-center position-relative col-8 text_container">
+                        <template v-if="!task.isEditMode">
+                            <p class="d-block align-self-center w-100 my-1 px-2 py-1 rounded-3 bg-info bg-opacity-50 text-break text-white task_description"
+                               v-text="task.text"></p>
+                        </template>
+
+                        <template v-else>
+                            <input class="form-control align-self-center text-white border bg-black text_field"
+                                   type="text"
+                                   :ref="task.id"
+                                   v-model.trim="task.editTaskText"
+                                   @keyup.enter="saveTask(task)"
+                                   @input="checkValidation(task)"
+                                   :class="{'border-light': task.isValidText, 'border-danger': !task.isValidText, invalidText: !task.isValidText}" />
+                            <div class="text-center invalid-tooltip"
+                                 :class="{'d-none': task.isValidText, 'd-block': !task.isValidText}">
+                                The field must not be empty or contain only spaces!
+                            </div>
+                        </template>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center col-4 buttons_container">
+                        <template v-if="!task.isEditMode">
+                            <input class="d-block w-100 mb-1 btn btn-primary edit"
+                                   type="button"
+                                   value="edit"
+                                   @click="enableEditMode(task, index)" />
+                        </template>
+
+                        <template v-else>
+                            <input class="d-block w-100 mb-1 btn btn-primary save"
+                                   type="button"
+                                   value="save"
+                                   @click="saveTask(task)" />
+                            <input class="d-block w-100 mb-1 btn btn-primary cancel"
+                                   type="button"
+                                   value="cancel"
+                                   @click="cancelEditTask(task)" />
+                        </template>
+
+                        <input class="d-block w-100 btn btn-danger delete"
+                               type="button"
+                               value="delete"
+                               @click="removeTask(index)" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
