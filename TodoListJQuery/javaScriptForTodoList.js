@@ -177,7 +177,7 @@ $(document).ready(function () {
         if ($(event.target).val().trim().length !== 0) {
             hideErrorMessage($(event.target).closest(".text_container"));
 
-            $(event.target).on("input", disableInputValidation);
+            $(event.target).off("input", disableInputValidation);
         }
     }
 
