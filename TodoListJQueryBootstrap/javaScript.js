@@ -191,7 +191,7 @@ $(document).ready(function () {
         if (currentElement.val().trim().length !== 0) {
             hideErrorTooltip(currentElement.closest(".text_container"));
 
-            currentElement.on("input", disableInputValidation);
+            currentElement.off("input", disableInputValidation);
         }
     }
 
