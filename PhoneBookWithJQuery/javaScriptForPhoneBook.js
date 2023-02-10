@@ -1,6 +1,13 @@
 ﻿"use strict";
 
 $(document).ready(function () {
+    var timerId = null;
+    var isTimerStarted = false;
+
+    $(".text_box").on("input", validateTextBox);
+
+    $(".add_contact_button").click(addContactToTable);
+
     function showDialog(event) {
         var tableRow = $(event.target).closest(".table_row");
 
@@ -42,6 +49,8 @@ $(document).ready(function () {
 
         var row = $(event.target).closest(".table_row");
 
+        var rowToDeleteIndex = $(".table_row").index(row);
+
         row.remove();
 
         var tableRows = $(".table_row");
@@ -52,35 +61,33 @@ $(document).ready(function () {
             return;
         }
 
-        var rowToDeleteIndex = tableRows.index(row);
-
         for (var i = rowToDeleteIndex; i < tableRows.length; i++) {
             tableRows.eq(i).find("div:first").text(i + 1);
         }
     }
 
-    function getNewContactRow(contactObject) {
+    function getNewContactRow(contact) {
         var contactsCount = $(".table_row").length + 1;
 
-        var rowContainer = $("<div class=\"table_row\"></div>");
+        var rowContainer = $("<div class='table_row'></div>");
 
         rowContainer
             .append($("<div></div>")
                 .text(contactsCount));
 
         rowContainer
-            .append($("<div class=\"last_name\"></div>")
-                .text(contactObject.lastName));
+            .append($("<div class='last_name'></div>")
+                .text(contact.lastName));
 
         rowContainer
-            .append($("<div class=\"first_name\"></div>")
-                .text(contactObject.firstName));
+            .append($("<div class='first_name'></div>")
+                .text(contact.firstName));
 
         rowContainer
-            .append($("<div class=\"phone_number\"></div>")
-                .text(contactObject.phoneNumber));
+            .append($("<div class='phone_number'></div>")
+                .text(contact.phoneNumber));
 
-        var rowDeleteButton = $("<input class=\"delete_row\" type=\"button\" name=\"delete_contact\" value=\"X\" title=\"Delete this row\" />")
+        var rowDeleteButton = $("<input class='delete_row' type='button' name='delete_contact' value='X' title='Delete this row' />")
             .click(showDialog);
 
         rowContainer
@@ -100,15 +107,15 @@ $(document).ready(function () {
     }
 
     function addContactToTable() {
-        var textBoxes = $(".text_box");
+        var firstName = $("#first_name");
 
         var newRow = getNewContactRow({
-            lastName: textBoxes.eq(1).val(),
-            firstName: textBoxes.eq(0).val(),
-            phoneNumber: textBoxes.eq(2).val()
+            lastName: $("#last_name").val(),
+            firstName: firstName.val(),
+            phoneNumber: $("#phone_number").val()
         });
 
-        $(".adding_contact_form>.container_row:last>input").prop("disabled", true);
+        $(".add_contact_button").prop("disabled", true);
 
         hideErrorMessage($(".text_box"));
 
@@ -118,10 +125,8 @@ $(document).ready(function () {
 
         $(".table").append(newRow);
 
-        textBoxes.eq(0).focus();
+        firstName.focus();
     }
-
-    $(".adding_contact_form>.container_row:last>input").click(addContactToTable);
 
     function showErrorMessage(wrapper, message, isValid) {
         var errorMessage = wrapper.next();
@@ -139,7 +144,7 @@ $(document).ready(function () {
             .html(message);
     }
 
-    function isPhoneBookNumber(phoneNumber) {
+    function isPhoneBookExists(phoneNumber) {
         var phoneNumbers = $(".table .phone_number");
 
         if (phoneNumbers.length === 0) {
@@ -156,7 +161,7 @@ $(document).ready(function () {
     }
 
     function accessTelephoneBook(event, errorMessages) {
-        var addContactButton = $(".adding_contact_form>.container_row:last>input");
+        var addContactButton = $(".add_contact_button");
 
         if (errorMessages !== "") {
             errorMessages = errorMessages.slice(0, errorMessages.lastIndexOf("<br/>"));
@@ -181,9 +186,6 @@ $(document).ready(function () {
 
         addContactButton.prop("disabled", false);
     }
-
-    var timerId = null;
-    var isTimerStarted = false;
 
     function validateTextBox(event) {
         var text = $(event.target).val();
@@ -224,7 +226,7 @@ $(document).ready(function () {
 
                 timerId = setTimeout(function () {
                     if (text.trim() !== "") {
-                        if (isPhoneBookNumber(text)) {
+                        if (isPhoneBookExists(text)) {
                             errorMessages += "The phone number is already in the phone book!<br/>";
                         } else {
                             errorMessages += "";
@@ -233,10 +235,8 @@ $(document).ready(function () {
                         accessTelephoneBook(event, errorMessages);
 
                         isTimerStarted = false;
-
-                        return;
                     }
-                }, 1000);
+                }, 300);
             }
         }
 
@@ -244,6 +244,4 @@ $(document).ready(function () {
             accessTelephoneBook(event, errorMessages);
         }
     }
-
-    $(".text_box").on("input", validateTextBox);
 });

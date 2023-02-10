@@ -12,45 +12,53 @@
     <script src="javaScriptForPhoneBook.js" defer></script>
 </head>
 <body>
-    <div class="dialog" title="Delete this phone number?">
-        <div class="contact_information_row">
-            <div>Last name: </div>
-            <div class="last_name"></div>
-        </div>
-        <div class="contact_information_row">
-            <div>First name: </div>
-            <div class="first_name"></div>
-        </div>
-        <div class="contact_information_row">
-            <div>Phone number: </div>
-            <div class="phone_number"></div>
-        </div>
-    </div>
-
     <h1 class="title">PHONE BOOK</h1>
     <div class="container">
         <form class="adding_contact_form">
             <h2 class="input_for_title">Add new contact:</h2>
             <label class="label" for="first_name">First name:</label>
             <div class="container_row">
-                <input class="text_box" id="first_name" type="text" name="first_name" value="" placeholder="enter your first name..." tabindex="1" autofocus />
+                <input class="text_box"
+                       id="first_name"
+                       type="text"
+                       name="first_name"
+                       value=""
+                       placeholder="enter your first name..."
+                       tabindex="1"
+                       autofocus />
                 <div class="error_message"></div>
             </div>
 
             <label class="label" for="last_name">Last name:</label>
             <div class="container_row">
-                <input class="text_box" id="last_name" type="text" name="last_name" value="" placeholder="enter your last name..." tabindex="2" />
+                <input class="text_box"
+                       id="last_name"
+                       type="text"
+                       name="last_name"
+                       value=""
+                       placeholder="enter your last name..."
+                       tabindex="2" />
                 <div class="error_message"></div>
             </div>
 
             <label class="label" for="phone_number">Phone number:</label>
             <div class="container_row">
-                <input class="text_box" id="phone_number" type="tel" name="phone_number" value="" placeholder="enter your phone number..." tabindex="3" />
+                <input class="text_box"
+                       id="phone_number"
+                       type="tel"
+                       name="phone_number"
+                       value=""
+                       placeholder="enter your phone number..."
+                       tabindex="3" />
                 <div class="error_message"></div>
             </div>
 
             <div class="container_row">
-                <input class="add_contact_button" type="button" name="add_new_contact" value="Add contact" disabled tabindex="4" />
+                <input class="add_contact_button"
+                       type="button"
+                       name="add_new_contact"
+                       value="Add contact"
+                       disabled tabindex="4" />
             </div>
         </form>
 
@@ -72,6 +80,21 @@
             </div>
 
             <h3 class="heading_no_contacts">Phone book is empty...</h3>
+        </div>
+    </div>
+
+    <div class="dialog" title="Delete this phone number?">
+        <div class="contact_information_row">
+            <div>Last name: </div>
+            <div class="last_name"></div>
+        </div>
+        <div class="contact_information_row">
+            <div>First name: </div>
+            <div class="first_name"></div>
+        </div>
+        <div class="contact_information_row">
+            <div>Phone number: </div>
+            <div class="phone_number"></div>
         </div>
     </div>
 </body>
