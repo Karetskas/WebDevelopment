@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Underscore", "Underscore\Un
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoListJQueryBootstrap", "TodoListJQueryBootstrap\TodoListJQueryBootstrap.csproj", "{C777543E-2042-4D3C-B5E3-C472BB0DCCED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList_Vue", "TodoList_Vue\TodoList_Vue.csproj", "{94DBAF7B-2B85-47C6-BA24-A9352885C38A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList_Vue", "TodoList_Vue\TodoList_Vue.csproj", "{94DBAF7B-2B85-47C6-BA24-A9352885C38A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneBook_Vue", "PhoneBook_Vue\PhoneBook_Vue.csproj", "{B9991666-5475-470D-9ABD-1FCF9B217157}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{94DBAF7B-2B85-47C6-BA24-A9352885C38A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94DBAF7B-2B85-47C6-BA24-A9352885C38A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94DBAF7B-2B85-47C6-BA24-A9352885C38A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9991666-5475-470D-9ABD-1FCF9B217157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9991666-5475-470D-9ABD-1FCF9B217157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9991666-5475-470D-9ABD-1FCF9B217157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9991666-5475-470D-9ABD-1FCF9B217157}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
