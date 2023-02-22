@@ -8,7 +8,7 @@
     <link href="styleSheet.css" rel="stylesheet" />
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js" defer></script>
     <script src="node_modules/vue/dist/vue.js" defer></script>
-    <script src="javaScript.js" defer></script>
+    <script src="javaScriptForTodoListVueTask.js" defer></script>
 </head>
 <body class="bg-black p-1">
     <div id="app">
@@ -23,7 +23,7 @@
                            ref="enterTask"
                            v-model.trim="taskText"
                            @keyup.enter="addTask"
-                           :class="{'border-light': isValidText, 'border-danger': !isValidText, invalidText: !isValidText}" />
+                           :class="{'border-light': isValidText, 'border-danger': !isValidText, invalid_text: !isValidText}" />
                     <div class="text-center invalid-tooltip"
                          :class="{'d-none': isValidText, 'd-block': !isValidText}">
                         The field must not be empty or contain only spaces!
@@ -57,8 +57,8 @@
                                    :ref="task.id"
                                    v-model.trim="task.editTaskText"
                                    @keyup.enter="saveTask(task)"
-                                   @input="checkValidation(task)"
-                                   :class="{'border-light': task.isValidText, 'border-danger': !task.isValidText, invalidText: !task.isValidText}" />
+                                   @input="checkTextForValidity(task)"
+                                   :class="{'border-light': task.isValidText, 'border-danger': !task.isValidText, invalid_text: !task.isValidText}" />
                             <div class="text-center invalid-tooltip"
                                  :class="{'d-none': task.isValidText, 'd-block': !task.isValidText}">
                                 The field must not be empty or contain only spaces!
@@ -70,7 +70,7 @@
                             <input class="d-block w-100 mb-1 btn btn-primary edit"
                                    type="button"
                                    value="edit"
-                                   @click="enableEditMode(task, index)" />
+                                   @click="startEditTask(task, index)" />
                         </template>
 
                         <template v-else>
