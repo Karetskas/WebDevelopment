@@ -128,14 +128,14 @@ $(document).ready(function () {
         firstName.focus();
     }
 
-    function showErrorMessage(wrapper, message, isValid) {
+    function showMessage(wrapper, message, isValid) {
         var errorMessage = wrapper.next();
 
-        errorMessage.addClass("error_message_successful_validation");
+        errorMessage.addClass("successful_validation");
         wrapper.removeClass("invalid");
 
         if (!isValid) {
-            errorMessage.removeClass("error_message_successful_validation");
+            errorMessage.removeClass("successful_validation");
             wrapper.addClass("invalid");
         }
 
@@ -144,7 +144,7 @@ $(document).ready(function () {
             .html(message);
     }
 
-    function isPhoneBookExists(phoneNumber) {
+    function containsPhone(phoneNumber) {
         var phoneNumbers = $(".table .phone_number");
 
         if (phoneNumbers.length === 0) {
@@ -166,15 +166,14 @@ $(document).ready(function () {
         if (errorMessages !== "") {
             errorMessages = errorMessages.slice(0, errorMessages.lastIndexOf("<br/>"));
 
-            showErrorMessage($(event.target), errorMessages, false);
+            showMessage($(event.target), errorMessages, false);
 
             addContactButton.prop("disabled", true);
 
             return;
         }
 
-        errorMessages = "This field is correct!";
-        showErrorMessage($(event.target), errorMessages, true);
+        showMessage($(event.target), "This field is correct!", true);
 
         var textBoxes = $(".text_box");
 
@@ -226,7 +225,7 @@ $(document).ready(function () {
 
                 timerId = setTimeout(function () {
                     if (text.trim() !== "") {
-                        if (isPhoneBookExists(text)) {
+                        if (containsPhone(text)) {
                             errorMessages += "The phone number is already in the phone book!<br/>";
                         } else {
                             errorMessages += "";
