@@ -5,7 +5,7 @@
         firstNameText: "",
         lastNameText: "",
         phoneNumberText: "",
-        elementId: 1,
+        nextContactId: 1,
         contacts: [],
         isPhoneBookEmpty: true,
         isAddingContact: false,
@@ -96,30 +96,30 @@
     },
 
     watch: {
-        firstNameText: function (val) {
+        firstNameText: function (text) {
             if (this.isAddingContact) {
                 return;
             }
 
-            this.showErrorMessage(this.validateText(val, {}), this.errorMessageFirstName);
+            this.showErrorMessage(this.validateText(text, {}), this.errorMessageFirstName);
         },
 
-        lastNameText: function (val) {
+        lastNameText: function (text) {
             if (this.isAddingContact) {
                 return;
             }
 
-            this.showErrorMessage(this.validateText(val, {}), this.errorMessageLastName);
+            this.showErrorMessage(this.validateText(text, {}), this.errorMessageLastName);
         },
 
-        phoneNumberText: function (val) {
+        phoneNumberText: function (text) {
             if (this.isAddingContact) {
                 this.isAddingContact = false;
 
                 return;
             }
 
-            this.showErrorMessage(this.validateText(val, this.errorMessagePhoneNumber), this.errorMessagePhoneNumber);
+            this.showErrorMessage(this.validateText(text, this.errorMessagePhoneNumber), this.errorMessagePhoneNumber);
         },
 
         selectedRowsCount: function (selectedRowsCount) {
@@ -148,13 +148,13 @@
             this.contacts.push({
                 isChecked: false,
                 isVisible: true,
-                id: this.elementId,
+                id: this.nextContactId,
                 firstName: this.firstNameText,
                 lastName: this.lastNameText,
                 phoneNumber: this.phoneNumberText
             });
 
-            this.elementId++;
+            this.nextContactId++;
             this.isPhoneBookEmpty = false;
             this.generalCheckBox.isDisabled = false;
 
