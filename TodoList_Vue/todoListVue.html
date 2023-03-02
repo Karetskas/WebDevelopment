@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-    <link href="styleSheet.css" rel="stylesheet" />
+    <link href="todoListVue.css" rel="stylesheet" />
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js" defer></script>
     <script src="node_modules/vue/dist/vue.js" defer></script>
-    <script src="javaScriptForTodoListVueTask.js" defer></script>
+    <script src="todoListVue.js" defer></script>
 </head>
 <body class="bg-black p-1">
     <div id="app">
@@ -17,13 +17,13 @@
         <div class="container mb-3 px-1 py-3 rounded-3 bg-info bg-opacity-25">
             <div class="row gx-2 p-1">
                 <div class="d-flex justify-content-center position-relative col-8 text_container">
-                    <input class="form-control text-white border bg-black text_field"
-                           type="text"
+                    <input type="text"
                            placeholder="Enter the task here..."
                            ref="enterTask"
                            v-model.trim="taskText"
-                           @keyup.enter="addTask"
-                           :class="{'border-light': isValidText, 'border-danger': !isValidText, invalid_text: !isValidText}" />
+                           class="form-control text-white border bg-black text_field"
+                           :class="{'border-light': isValidText, 'border-danger': !isValidText, invalid_text: !isValidText}"
+                           @keyup.enter="addTask" />
                     <div class="text-center invalid-tooltip"
                          :class="{'d-none': isValidText, 'd-block': !isValidText}">
                         The field must not be empty or contain only spaces!
@@ -52,13 +52,13 @@
                         </template>
 
                         <template v-else>
-                            <input class="form-control align-self-center text-white border bg-black text_field"
-                                   type="text"
+                            <input type="text"
                                    :ref="task.id"
                                    v-model.trim="task.editTaskText"
+                                   class="form-control align-self-center text-white border bg-black text_field"
+                                   :class="{'border-light': task.isValidText, 'border-danger': !task.isValidText, invalid_text: !task.isValidText}"
                                    @keyup.enter="saveTask(task)"
-                                   @input="checkTextForValidity(task)"
-                                   :class="{'border-light': task.isValidText, 'border-danger': !task.isValidText, invalid_text: !task.isValidText}" />
+                                   @input="checkText(task)" />
                             <div class="text-center invalid-tooltip"
                                  :class="{'d-none': task.isValidText, 'd-block': !task.isValidText}">
                                 The field must not be empty or contain only spaces!

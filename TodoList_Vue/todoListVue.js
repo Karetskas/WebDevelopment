@@ -55,6 +55,7 @@
         },
 
         cancelEditTask: function (task) {
+            task.isValidText = true;
             task.isEditMode = false;
         },
 
@@ -71,7 +72,7 @@
             task.isEditMode = false;
         },
 
-        checkTextForValidity: function (task) {
+        checkText: function (task) {
             if (task.editTaskText.length !== 0) {
                 task.isValidText = true;
             }
