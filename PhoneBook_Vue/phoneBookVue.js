@@ -2,18 +2,17 @@
     el: "#app",
 
     data: {
-        firstNameText: "",
-        lastNameText: "",
-        phoneNumberText: "",
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
         nextContactId: 1,
         contacts: [],
-        canCheckFields: false,
 
         contactsToDelete: [],
 
         modalDialog: null,
 
-        textToFilter: ""
+        filterText: ""
     },
 
     computed: {
@@ -21,16 +20,28 @@
             return this.contacts.length !== 0;
         },
 
+        canCheckFirstName: function () {
+            return this.firstName.length > 0;
+        },
+
+        canCheckLastName: function () {
+            return this.lastName.length > 0;
+        },
+
+        canCheckPhoneNumber: function () {
+            return this.phoneNumber.length > 0;
+        },
+
         messageInFirstName: function () {
-            return this.validateText(this.firstNameText, false);
+            return this.validateText(this.firstName, false);
         },
 
         messageInLastName: function () {
-            return this.validateText(this.lastNameText, false);
+            return this.validateText(this.lastName, false);
         },
 
         messageInPhoneNumber: function () {
-            return this.validateText(this.phoneNumberText, true);
+            return this.validateText(this.phoneNumber, true);
         },
 
         isValidMessageInFirstName: function () {
@@ -46,37 +57,37 @@
         },
 
         isValidInputInFirstName: function () {
-            return this.isValidMessageInFirstName && this.canCheckFields;
+            return this.canCheckFirstName && this.isValidMessageInFirstName;
         },
 
         isInvalidInputInFirstName: function () {
-            return !this.isValidMessageInFirstName && this.canCheckFields;
+            return this.canCheckFirstName && !this.isValidMessageInFirstName;
         },
 
         isValidInputInLastName: function () {
-            return this.isValidMessageInLastName && this.canCheckFields;
+            return this.canCheckLastName && this.isValidMessageInLastName;
         },
 
         isInvalidInputInLastName: function () {
-            return !this.isValidMessageInLastName && this.canCheckFields;
+            return this.canCheckLastName && !this.isValidMessageInLastName;
         },
 
         isValidInputInPhoneNumber: function () {
-            return this.isValidMessageInPhoneNumber && this.canCheckFields;
+            return this.canCheckPhoneNumber && this.isValidMessageInPhoneNumber;
         },
 
         isInvalidInputInPhoneNumber: function () {
-            return !this.isValidMessageInPhoneNumber && this.canCheckFields;
+            return this.canCheckPhoneNumber && !this.isValidMessageInPhoneNumber;
         },
 
-        areValidContactFields: function () {
+        areInvalidContactFields: function () {
             return !this.isValidMessageInFirstName
                 || !this.isValidMessageInLastName
                 || !this.isValidMessageInPhoneNumber;
         },
 
         selectedContacts: function () {
-            return this.contactsFilter.filter(function (contact) {
+            return this.filteredContacts.filter(function (contact) {
                 return contact.isChecked;
             });
         },
@@ -85,45 +96,37 @@
             return this.selectedContacts.length;
         },
 
-        isDisabledGeneralCheckBox: function () {
-            return !this.hasContacts;
-        },
-
-        isDisabledDeleteContactsButton: function () {
+        disabledDeleteContactsButton: function () {
             return this.selectedRowsCount === 0;
         },
 
         isCheckedGeneralCheckBox: function () {
-            return this.contactsFilter.length > 0 && this.selectedRowsCount === this.contactsFilter.length;
+            return this.filteredContacts.length > 0 && this.selectedRowsCount === this.filteredContacts.length;
         },
 
-        contactsFilter: function () {
-            var textToFilter = this.textToFilter.trim().toLowerCase();
+        filteredContacts: function () {
+            var filterText = this.filterText.trim().toLowerCase();
 
-            if (textToFilter.length === 0) {
+            if (filterText.length === 0) {
                 return this.contacts;
             }
 
             return this.contacts.filter(function (contact) {
-                return contact.firstName.toLowerCase().includes(textToFilter)
-                    || contact.lastName.toLowerCase().includes(textToFilter)
-                    || contact.phoneNumber.toLowerCase().includes(textToFilter);
+                return contact.firstName.toLowerCase().includes(filterText)
+                    || contact.lastName.toLowerCase().includes(filterText)
+                    || contact.phoneNumber.toLowerCase().includes(filterText);
             });
         },
 
-        isContactsFilterEmpty: function () {
-            return this.contactsFilter.length === 0 && this.contacts.length !== 0;
-        }
-    },
-
-    watch: {
-        hasContacts: function () {
-            this.textToFilter = "";
+        hasFilteredContacts: function () {
+            return this.filteredContacts.length > 0;
         }
     },
 
     mounted: function () {
         this.setFocusToFirstName();
+
+        this.modalDialog = new bootstrap.Modal(this.$refs.modalDialogForDeletingContact);
     },
 
     methods: {
@@ -164,27 +167,23 @@
         addContact: function () {
             this.contacts.push({
                 id: this.nextContactId,
-                firstName: this.firstNameText,
-                lastName: this.lastNameText,
-                phoneNumber: this.phoneNumberText,
+                firstName: this.firstName,
+                lastName: this.lastName,
+                phoneNumber: this.phoneNumber,
                 isChecked: false
             });
 
             this.nextContactId++;
 
-            this.canCheckFields = false;
-
-            this.firstNameText = "";
-            this.lastNameText = "";
-            this.phoneNumberText = "";
+            this.firstName = "";
+            this.lastName = "";
+            this.phoneNumber = "";
 
             this.setFocusToFirstName();
         },
 
         showModalDialogForDeletingContacts: function (contacts) {
             this.contactsToDelete = contacts;
-
-            this.modalDialog = new bootstrap.Modal(this.$refs.modalDialogForDeletingContact);
 
             this.modalDialog.show();
         },
@@ -199,20 +198,14 @@
             var self = this;
 
             this.contacts = this.contacts.filter(function (contact) {
-                var canDeleted = false;
-
-                self.contactsToDelete = self.contactsToDelete.filter(function (contactToDelete) {
-                    if (contactToDelete.id === contact.id) {
-                        canDeleted = true;
-
-                        return false;
-                    }
-
-                    return true;
+                var foundContactToDelete = self.contactsToDelete.find(function (contactToDelete) {
+                    return contactToDelete.id === contact.id;
                 });
 
-                return !canDeleted;
+                return typeof foundContactToDelete === "undefined";
             });
+
+            this.contactsToDelete = [];
         },
 
         changeCheckBox: function (contact) {
@@ -222,7 +215,7 @@
         changeAllCheckBoxes: function () {
             var isCheckedGeneralCheckBox = this.isCheckedGeneralCheckBox;
 
-            this.contactsFilter.forEach(function (contact) {
+            this.filteredContacts.forEach(function (contact) {
                 contact.isChecked = !isCheckedGeneralCheckBox;
             });
         }
