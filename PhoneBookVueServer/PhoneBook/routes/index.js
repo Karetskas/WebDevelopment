@@ -124,15 +124,7 @@ router.post("/api/deleteContacts", function (req, res) {
     var deleteContactsId = req.body.id;
 
     contacts = contacts.filter(function (contact) {
-        var index = deleteContactsId.indexOf(contact.id);
-
-        if (index !== -1) {
-            deleteContactsId.splice(index, 1);
-
-            return false;
-        }
-
-        return true;
+        return !deleteContactsId.includes(contact.id);
     });
 
     res.send({

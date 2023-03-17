@@ -30,11 +30,10 @@ var rootComponent = new Vue({
     el: "#app",
 
     data: {
-        firstNameText: "",
-        lastNameText: "",
-        phoneNumberText: "",
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
         contacts: [],
-        canCheckFields: false,
 
         messageInFirstName: "",
         messageInLastName: "",
@@ -46,14 +45,19 @@ var rootComponent = new Vue({
         contactsIdToDelete: [],
         requestErrorMessage: "",
 
-        modalDialog: null,
+        modalDialogForDeletingContacts: null,
+        modalDialogForDisplayingServerMessage: null,
 
-        textToFilter: "",
+        filterText: "",
 
         delayTimerId: null
     },
 
     computed: {
+        hasContacts: function () {
+            return this.contacts.length !== 0;
+        },
+
         isValidMessageInFirstName: function () {
             return this.messageInFirstName === "This field is correct!";
         },
@@ -66,45 +70,53 @@ var rootComponent = new Vue({
             return this.messageInPhoneNumber === "This field is correct!";
         },
 
+        canCheckFirstName: function () {
+            return this.firstName.length > 0;
+        },
+
+        canCheckLastName: function () {
+            return this.lastName.length > 0;
+        },
+
+        canCheckPhoneNumber: function () {
+            return this.phoneNumber > 0;
+        },
+
         isValidInputInFirstName: function () {
-            return this.isValidMessageInFirstName && this.canCheckFields;
+            return this.canCheckFirstName && this.isValidMessageInFirstName;
         },
 
         isInvalidInputInFirstName: function () {
-            return !this.isValidMessageInFirstName && this.canCheckFields;
+            return this.canCheckFirstName && !this.isValidMessageInFirstName;
         },
 
         isValidInputInLastName: function () {
-            return this.isValidMessageInLastName && this.canCheckFields;
+            return this.canCheckLastName && this.isValidMessageInLastName;
         },
 
         isInvalidInputInLastName: function () {
-            return !this.isValidMessageInLastName && this.canCheckFields;
+            return this.canCheckLastName && !this.isValidMessageInLastName;
         },
 
         isValidInputInPhoneNumber: function () {
-            return this.isValidMessageInPhoneNumber && this.canCheckFields;
+            return this.canCheckPhoneNumber && this.isValidMessageInPhoneNumber;
         },
 
         isInvalidInputInPhoneNumber: function () {
-            return !this.isValidMessageInPhoneNumber && this.canCheckFields;
+            return this.canCheckPhoneNumber && !this.isValidMessageInPhoneNumber;
         },
 
-        areValidContactFields: function () {
+        areInvalidContactFields: function () {
             return !this.isValidMessageInFirstName
                 || !this.isValidMessageInLastName
                 || !this.isValidMessageInPhoneNumber;
-        },
-
-        isDisabledGeneralCheckBox: function () {
-            return this.contacts.length === 0;
         },
 
         selectedRowsCount: function () {
             return this.selectedContacts.length;
         },
 
-        isDisabledDeleteContactsButton: function () {
+        disableDeleteContactsButton: function () {
             return this.selectedRowsCount === 0;
         },
 
@@ -112,42 +124,26 @@ var rootComponent = new Vue({
             return this.contacts.length > 0 && this.selectedRowsCount === this.contacts.length;
         },
 
-        isContactsFilterEmpty: function () {
-            return this.contacts.length === 0 && this.textToFilter !== "";
-        },
-
-        isContactsEmpty: function () {
-            return this.contacts.length === 0 && this.textToFilter === "";
-        },
-
         contactsToDelete: function () {
-            var contactsIdToDelete = this.contactsIdToDelete.slice(0);
+            var self = this;
 
             return this.contacts.filter(function (contact) {
-                var index = contactsIdToDelete.indexOf(contact.id);
-
-                if (index !== -1) {
-                    contactsIdToDelete.splice(index, 1);
-
-                    return true;
-                }
-
-                return false;
+                return self.contactsIdToDelete.includes(contact.id);
             });
         }
     },
 
     watch: {
-        firstNameText: function () {
-            this.validateText(this.firstNameText, "firstName");
+        firstName: function () {
+            this.validateText(this.firstName, "firstName");
         },
 
-        lastNameText: function () {
-            this.validateText(this.lastNameText, "lastName");
+        lastName: function () {
+            this.validateText(this.lastName, "lastName");
         },
 
-        phoneNumberText: function () {
-            this.validateText(this.phoneNumberText, "phoneNumber");
+        phoneNumber: function () {
+            this.validateText(this.phoneNumber, "phoneNumber");
         },
 
         contacts: function () {
@@ -160,7 +156,7 @@ var rootComponent = new Vue({
             });
         },
 
-        textToFilter: function () {
+        filterText: function () {
             clearTimeout(this.delayTimerId);
 
             var self = this;
@@ -177,6 +173,9 @@ var rootComponent = new Vue({
 
     mounted: function () {
         this.setFocusToFirstName();
+
+        this.modalDialogForDeletingContacts = new bootstrap.Modal(this.$refs.modalDialogForDeletingContact);
+        this.modalDialogForDisplayingServerMessage = new bootstrap.Modal(this.$refs.modalDialogForServerMessage);
     },
 
     methods: {
@@ -187,7 +186,7 @@ var rootComponent = new Vue({
         loadContacts: function () {
             var self = this;
 
-            this.service.getContacts(this.textToFilter).done(function (contacts) {
+            this.service.getContacts(this.filterText).done(function (contacts) {
                 self.contacts = contacts;
 
 
@@ -232,9 +231,9 @@ var rootComponent = new Vue({
             var self = this;
 
             var contact = {
-                firstName: this.firstNameText,
-                lastName: this.lastNameText,
-                phoneNumber: this.phoneNumberText
+                firstName: this.firstName,
+                lastName: this.lastName,
+                phoneNumber: this.phoneNumber
             }
 
             this.service.addContact(contact).done(function (response) {
@@ -248,11 +247,9 @@ var rootComponent = new Vue({
 
                 self.loadContacts();
 
-                self.canCheckFields = false;
-
-                self.firstNameText = "";
-                self.lastNameText = "";
-                self.phoneNumberText = "";
+                self.firstName = "";
+                self.lastName = "";
+                self.phoneNumber = "";
 
                 self.setFocusToFirstName();
             }).fail(function () {
@@ -263,21 +260,17 @@ var rootComponent = new Vue({
         showModalDialogForDeletingContacts: function (contacts) {
             this.contactsIdToDelete = contacts;
 
-            this.modalDialog = new bootstrap.Modal(this.$refs.modalDialogForDeletingContact);
-
-            this.modalDialog.show();
+            this.modalDialogForDeletingContacts.show();
         },
 
         showModalDialogForServerMessage: function (message) {
             this.requestErrorMessage = message;
 
-            this.modalDialog = new bootstrap.Modal(this.$refs.modalDialogForServerMessage);
-
-            this.modalDialog.show();
+            this.modalDialogForDisplayingServerMessage.show();
         },
 
         deleteContacts: function () {
-            this.modalDialog.hide();
+            this.modalDialogForDeletingContacts.hide();
 
             var self = this;
 
