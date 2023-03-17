@@ -96,7 +96,7 @@
             return this.selectedContacts.length;
         },
 
-        disabledDeleteContactsButton: function () {
+        disableDeleteContactsButton: function () {
             return this.selectedRowsCount === 0;
         },
 
