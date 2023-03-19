@@ -1,0 +1,37 @@
+{
+  "name": "public",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "watch": "webpack --mode development --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "WebDevelopment"
+  },
+  "author": "KaretskasEV",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "bootstrap-icons": "^1.10.3",
+    "jquery": "^3.6.4",
+    "vue": "^2.7.14"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.3",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.3",
+    "mini-css-extract-plugin": "^2.7.3",
+    "sass": "^1.59.3",
+    "sass-loader": "^13.2.0",
+    "vue-loader": "^15.10.1",
+    "vue-template-compiler": "^2.7.14",
+    "webpack": "^5.76.1",
+    "webpack-cli": "^5.0.1"
+  }
+}
