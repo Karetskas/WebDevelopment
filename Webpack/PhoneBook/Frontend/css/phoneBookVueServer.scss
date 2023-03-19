@@ -1,0 +1,17 @@
+﻿$danger: #F11;
+
+@import "~bootstrap/scss/bootstrap";
+
+[v-cloak] {
+    display: none;
+}
+
+.table-group-divider {
+    border-top-color: #888;
+}
+
+@media (min-width: 576px) {
+    body {
+        font-size: 1.25rem;
+    }
+}

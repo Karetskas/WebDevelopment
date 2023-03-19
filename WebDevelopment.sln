@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList_Vue", "TodoList_Vu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhoneBook_Vue", "PhoneBook_Vue\PhoneBook_Vue.csproj", "{B9991666-5475-470D-9ABD-1FCF9B217157}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneBookVueServer", "PhoneBookVueServer\PhoneBookVueServer.csproj", "{058EB2E9-4A8D-47B3-8977-AB498A73ABC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhoneBookVueServer", "PhoneBookVueServer\PhoneBookVueServer.csproj", "{058EB2E9-4A8D-47B3-8977-AB498A73ABC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webpack", "Webpack\Webpack.csproj", "{C08831FD-10BE-439F-A842-0CA9008EF445}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,10 @@ Global
 		{058EB2E9-4A8D-47B3-8977-AB498A73ABC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{058EB2E9-4A8D-47B3-8977-AB498A73ABC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{058EB2E9-4A8D-47B3-8977-AB498A73ABC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C08831FD-10BE-439F-A842-0CA9008EF445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C08831FD-10BE-439F-A842-0CA9008EF445}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C08831FD-10BE-439F-A842-0CA9008EF445}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C08831FD-10BE-439F-A842-0CA9008EF445}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
