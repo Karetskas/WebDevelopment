@@ -2,13 +2,14 @@
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-module.exports = {
+module.exports = (env, argv) => ({
     entry: "./js/phoneBookVueServer.js",
 
     devtool: "source-map",
 
-    target: ["web", "es5"],
+    target: argv.mode === "development" ? ["web"] : ["web", "es5"],
 
     output: {
         filename: "phoneBookVueServer.js",
@@ -25,15 +26,15 @@ module.exports = {
         rules: [
             {
                 test: /\.scss$/,
-                use: [
-                    MiniCssExtractPlugin.loader, "css-loader", "sass-loader"
-                ]
+                use: argv.env.WEBPACK_SERVE
+                    ? ["style-loader", "css-loader", "sass-loader"]
+                    : [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
             },
             {
                 test: /\.css$/,
-                use: [
-                    MiniCssExtractPlugin.loader, "css-loader"
-                ]
+                use: argv.env.WEBPACK_SERVE 
+                    ? ["style-loader", "css-loader"] 
+                    : [MiniCssExtractPlugin.loader, "css-loader"]
             },
             {
                 test: /\.(png|jpg|gif|svg|ttf|eot|woff|woff2)$/,
@@ -63,11 +64,17 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "phoneBookVueServer.css"
         }),
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        new HtmlWebpackPlugin({
+            template: "index.html"
+        })
     ],
 
     devServer: {
         hot: true,
-        open: true
+        open: true,
+        proxy: {
+            '/api': 'http://localhost:3000'
+        }
     }
-}
+});

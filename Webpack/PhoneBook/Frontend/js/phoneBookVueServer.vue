@@ -1,7 +1,7 @@
 using System.Runtime.Serialization;
 
 <template>
-    <div class="container v-cloak">
+    <div class="v-cloak">
         <div class="h1 text-decoration-underline text-center">Phone book</div>
 
         <div class="container-md d-flex flex-column mb-3 align-items-center p-3 rounded-5 bg-secondary bg-opacity-25 border border-3 border-secondary">
