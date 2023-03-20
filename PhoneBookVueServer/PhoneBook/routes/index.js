@@ -121,10 +121,10 @@ router.post("/api/addContact", function (req, res) {
 });
 
 router.post("/api/deleteContacts", function (req, res) {
-    var deleteContactsId = req.body.id;
+    var deleteContactsIds = req.body.ids;
 
     contacts = contacts.filter(function (contact) {
-        return !deleteContactsId.includes(contact.id);
+        return !deleteContactsIds.includes(contact.id);
     });
 
     res.send({

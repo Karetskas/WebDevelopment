@@ -22,8 +22,8 @@ PhoneBookService.prototype.addContact = function (contact) {
     return post(this.baseUrl + "addContact", { contact: contact });
 }
 
-PhoneBookService.prototype.deleteContacts = function (id) {
-    return post(this.baseUrl + "deleteContacts", { id: id });
+PhoneBookService.prototype.deleteContacts = function (ids) {
+    return post(this.baseUrl + "deleteContacts", { ids: ids });
 }
 
 var rootComponent = new Vue({
@@ -41,8 +41,8 @@ var rootComponent = new Vue({
 
         service: new PhoneBookService(),
 
-        selectedContacts: [],
-        contactsIdToDelete: [],
+        selectedContactsIds: [],
+        contactsIdsToDelete: [],
         requestErrorMessage: "",
 
         modalDialogForDeletingContacts: null,
@@ -113,7 +113,7 @@ var rootComponent = new Vue({
         },
 
         selectedRowsCount: function () {
-            return this.selectedContacts.length;
+            return this.selectedContactsIds.length;
         },
 
         disableDeleteContactsButton: function () {
@@ -128,7 +128,7 @@ var rootComponent = new Vue({
             var self = this;
 
             return this.contacts.filter(function (contact) {
-                return self.contactsIdToDelete.includes(contact.id);
+                return self.contactsIdsToDelete.includes(contact.id);
             });
         }
     },
@@ -149,7 +149,7 @@ var rootComponent = new Vue({
         contacts: function () {
             var self = this;
 
-            this.selectedContacts = this.selectedContacts.filter(function (contactId) {
+            this.selectedContactsIds = this.selectedContactsIds.filter(function (contactId) {
                 return self.contacts.some(function (contact) {
                     return contactId === contact.id;
                 });
@@ -234,7 +234,7 @@ var rootComponent = new Vue({
                 firstName: this.firstName,
                 lastName: this.lastName,
                 phoneNumber: this.phoneNumber
-            }
+            };
 
             this.service.addContact(contact).done(function (response) {
                 if (!response.success) {
@@ -244,7 +244,6 @@ var rootComponent = new Vue({
 
                     return;
                 }
-
                 self.loadContacts();
 
                 self.firstName = "";
@@ -253,12 +252,12 @@ var rootComponent = new Vue({
 
                 self.setFocusToFirstName();
             }).fail(function () {
-                this.showModalDialogForServerMessage("Failed to load contacts.");
+                self.showModalDialogForServerMessage("Failed to load contacts.");
             });
         },
 
         showModalDialogForDeletingContacts: function (contacts) {
-            this.contactsIdToDelete = contacts;
+            this.contactsIdsToDelete = contacts;
 
             this.modalDialogForDeletingContacts.show();
         },
@@ -274,37 +273,37 @@ var rootComponent = new Vue({
 
             var self = this;
 
-            this.service.deleteContacts(this.contactsIdToDelete).done(function () {
+            this.service.deleteContacts(this.contactsIdsToDelete).done(function () {
                 self.loadContacts();
             }).fail(function () {
-                this.showModalDialogForServerMessage("Failed to delete contacts.");
+                self.showModalDialogForServerMessage("Failed to delete contacts.");
             });
         },
 
         isCheckedContact: function (contactId) {
-            return this.selectedContacts.includes(contactId);
+            return this.selectedContactsIds.includes(contactId);
         },
 
         changeSelectedContacts: function (contactId) {
-            var index = this.selectedContacts.indexOf(contactId);
+            var index = this.selectedContactsIds.indexOf(contactId);
 
             if (index === -1) {
-                this.selectedContacts.push(contactId);
+                this.selectedContactsIds.push(contactId);
 
                 return;
             }
 
-            this.selectedContacts.splice(index, 1);
+            this.selectedContactsIds.splice(index, 1);
         },
 
         changeAllCheckBoxes: function () {
             if (this.isCheckedGeneralCheckBox) {
-                this.selectedContacts = [];
+                this.selectedContactsIds = [];
 
                 return;
             }
 
-            this.selectedContacts = this.contacts.map(function (contact) {
+            this.selectedContactsIds = this.contacts.map(function (contact) {
                 return contact.id;
             });
         }
