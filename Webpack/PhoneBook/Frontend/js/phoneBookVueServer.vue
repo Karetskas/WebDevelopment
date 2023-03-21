@@ -1,5 +1,3 @@
-using System.Runtime.Serialization;
-
 <template>
     <div class="v-cloak">
         <div class="h1 text-decoration-underline text-center">Phone book</div>
@@ -75,7 +73,7 @@ using System.Runtime.Serialization;
                     class="me-1 pb-2 btn btn-danger rounded-3 position-relative"
                     title="Delete selected rows with phone numbers"
                     :disabled="disableDeleteContactsButton"
-                    @click="showModalDialogForDeletingContacts(selectedContacts)">
+                    @click="showModalDialogForDeletingContacts(selectedContactsIds)">
                 <i class="bi bi-trash fs-4"></i>
                 <span class="position-absolute py-0 top-0 start-50 translate-middle badge rounded-pill bg-dark"
                       v-text="selectedRowsCount">
@@ -257,8 +255,8 @@ using System.Runtime.Serialization;
 
                 service: new PhoneBookService(),
 
-                selectedContacts: [],
-                contactsIdToDelete: [],
+                selectedContactsIds: [],
+                contactsIdsToDelete: [],
                 requestErrorMessage: "",
 
                 modalDialogForDeletingContacts: null,
@@ -330,7 +328,7 @@ using System.Runtime.Serialization;
             },
 
             selectedRowsCount() {
-                return this.selectedContacts.length;
+                return this.selectedContactsIds.length;
             },
 
             disableDeleteContactsButton() {
@@ -342,7 +340,7 @@ using System.Runtime.Serialization;
             },
 
             contactsToDelete() {
-                return this.contacts.filter(contact => this.contactsIdToDelete.includes(contact.id));
+                return this.contacts.filter(contact => this.contactsIdsToDelete.includes(contact.id));
             }
         },
 
@@ -360,7 +358,7 @@ using System.Runtime.Serialization;
             },
 
             contacts() {
-                this.selectedContacts = this.selectedContacts.filter(contactId =>
+                this.selectedContactsIds = this.selectedContactsIds.filter(contactId =>
                     this.contacts.some(contact => contactId === contact.id));
             },
 
@@ -430,7 +428,7 @@ using System.Runtime.Serialization;
                     firstName: this.firstName,
                     lastName: this.lastName,
                     phoneNumber: this.phoneNumber
-                }
+                };
 
                 this.service.addContact(contact)
                     .done(response => {
@@ -441,7 +439,6 @@ using System.Runtime.Serialization;
 
                             return;
                         }
-
                         this.loadContacts();
 
                         this.firstName = "";
@@ -454,7 +451,7 @@ using System.Runtime.Serialization;
             },
 
             showModalDialogForDeletingContacts(contacts) {
-                this.contactsIdToDelete = contacts;
+                this.contactsIdsToDelete = contacts;
 
                 this.modalDialogForDeletingContacts.show();
             },
@@ -468,38 +465,36 @@ using System.Runtime.Serialization;
             deleteContacts() {
                 this.modalDialogForDeletingContacts.hide();
 
-                this.service.deleteContacts(this.contactsIdToDelete)
+                this.service.deleteContacts(this.contactsIdsToDelete)
                     .done(() => this.loadContacts())
                     .fail(() => this.showModalDialogForServerMessage("Failed to delete contacts."));
             },
 
             isCheckedContact(contactId) {
-                return this.selectedContacts.includes(contactId);
+                return this.selectedContactsIds.includes(contactId);
             },
 
             changeSelectedContacts(contactId) {
-                const index = this.selectedContacts.indexOf(contactId);
+                const index = this.selectedContactsIds.indexOf(contactId);
 
                 if (index === -1) {
-                    this.selectedContacts.push(contactId);
+                    this.selectedContactsIds.push(contactId);
 
                     return;
                 }
 
-                this.selectedContacts.splice(index, 1);
+                this.selectedContactsIds.splice(index, 1);
             },
 
             changeAllCheckBoxes() {
                 if (this.isCheckedGeneralCheckBox) {
-                    this.selectedContacts = [];
+                    this.selectedContactsIds = [];
 
                     return;
                 }
 
-                this.selectedContacts = this.contacts.map(contact => contact.id);
+                this.selectedContactsIds = this.contacts.map(contact => contact.id);
             }
         }
     };
-
-
 </script>

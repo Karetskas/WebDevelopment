@@ -111,9 +111,9 @@ router.post("/api/addContact", (req, res) => {
 });
 
 router.post("/api/deleteContacts", (req, res) => {
-    const deleteContactsId = req.body.id;
+    const deleteContactsIds = req.body.ids;
 
-    contacts = contacts.filter(contact => !deleteContactsId.includes(contact.id));
+    contacts = contacts.filter(contact => !deleteContactsIds.includes(contact.id));
 
     res.send({
         success: true,
