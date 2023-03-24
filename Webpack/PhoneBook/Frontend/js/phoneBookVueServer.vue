@@ -2,68 +2,70 @@
     <div class="v-cloak">
         <div class="h1 text-decoration-underline text-center">Phone book</div>
 
-        <div class="container-md d-flex flex-column mb-3 align-items-center p-3 rounded-5 bg-secondary bg-opacity-25 border border-3 border-secondary">
-            <div class="h2 col-12 col-sm-10 col-md-8">Add new contact:</div>
+        <div class="container-md mb-3 rounded-5 bg-secondary bg-opacity-25 border border-3 border-secondary">
+            <div class="row d-fles flex-column align-items-center p-3">
+                <div class="h2 col-12 col-sm-10 col-md-8">Add new contact:</div>
 
-            <div class="col-12 col-sm-10 col-md-8">
-                <label>First name:</label>
-                <div class="mb-1 d-flex flex-column align-items-center">
-                    <input type="text"
-                           name="first_name"
-                           placeholder="enter first name..."
-                           tabindex="1"
-                           required
-                           ref="firstName"
-                           v-model="firstName"
-                           class="form-control ps-2 pe-4 rounded-3 w-100 border border-1 border-secondary"
-                           :class="{'is-valid': isValidInputInFirstName, 'is-invalid': isInvalidInputInFirstName}" />
-                    <div v-if="canCheckFirstName"
-                         class="text-center fst-italic"
-                         :class="{'valid-feedback': isValidMessageInFirstName, 'invalid-feedback': !isValidMessageInFirstName}"
-                         v-text="messageInFirstName"></div>
-                </div>
+                <div class="col-12 col-sm-10 col-md-8">
+                    <label>First name:</label>
+                    <div class="mb-1 d-flex flex-column align-items-center">
+                        <input type="text"
+                               name="first_name"
+                               placeholder="enter first name..."
+                               tabindex="1"
+                               required
+                               ref="firstName"
+                               v-model="firstName"
+                               class="form-control ps-2 pe-4 rounded-3 w-100 border border-1 border-secondary"
+                               :class="{'is-valid': isValidInputInFirstName, 'is-invalid': isInvalidInputInFirstName}" />
+                        <div v-if="canCheckFirstName"
+                             class="text-center fst-italic"
+                             :class="{'valid-feedback': isValidMessageInFirstName, 'invalid-feedback': !isValidMessageInFirstName}"
+                             v-text="messageInFirstName"></div>
+                    </div>
 
-                <label>Last name:</label>
-                <div class="mb-1 d-flex flex-column align-items-center">
-                    <input type="text"
-                           name="last_name"
-                           placeholder="enter last name..."
-                           tabindex="2"
-                           required
-                           v-model="lastName"
-                           class="form-control ps-2 pe-4 rounded-3 w-100 border border-1 border-secondary"
-                           :class="{'is-valid': isValidInputInLastName, 'is-invalid': isInvalidInputInLastName}" />
-                    <div v-if="canCheckLastName"
-                         class="text-center fst-italic"
-                         :class="{'valid-feedback': isValidMessageInLastName, 'invalid-feedback': !isValidMessageInLastName}"
-                         v-text="messageInLastName"></div>
-                </div>
+                    <label>Last name:</label>
+                    <div class="mb-1 d-flex flex-column align-items-center">
+                        <input type="text"
+                               name="last_name"
+                               placeholder="enter last name..."
+                               tabindex="2"
+                               required
+                               v-model="lastName"
+                               class="form-control ps-2 pe-4 rounded-3 w-100 border border-1 border-secondary"
+                               :class="{'is-valid': isValidInputInLastName, 'is-invalid': isInvalidInputInLastName}" />
+                        <div v-if="canCheckLastName"
+                             class="text-center fst-italic"
+                             :class="{'valid-feedback': isValidMessageInLastName, 'invalid-feedback': !isValidMessageInLastName}"
+                             v-text="messageInLastName"></div>
+                    </div>
 
-                <label>Phone number:</label>
-                <div class="mb-3 d-flex flex-column align-items-center">
-                    <input type="text"
-                           name="phone_number"
-                           placeholder="enter phone number..."
-                           tabindex="3"
-                           required
-                           v-model="phoneNumber"
-                           class="form-control ps-2 pe-4 rounded-3 w-100 border border-1 border-secondary"
-                           :class="{'is-valid': isValidInputInPhoneNumber, 'is-invalid': isInvalidInputInPhoneNumber}" />
-                    <div v-if="canCheckPhoneNumber"
-                         class="text-center fst-italic"
-                         :class="{'valid-feedback': isValidMessageInPhoneNumber, 'invalid-feedback': !isValidMessageInPhoneNumber}"
-                         v-text="messageInPhoneNumber"></div>
-                </div>
+                    <label>Phone number:</label>
+                    <div class="mb-3 d-flex flex-column align-items-center">
+                        <input type="text"
+                               name="phone_number"
+                               placeholder="enter phone number..."
+                               tabindex="3"
+                               required
+                               v-model="phoneNumber"
+                               class="form-control ps-2 pe-4 rounded-3 w-100 border border-1 border-secondary"
+                               :class="{'is-valid': isValidInputInPhoneNumber, 'is-invalid': isInvalidInputInPhoneNumber}" />
+                        <div v-if="canCheckPhoneNumber"
+                             class="text-center fst-italic"
+                             :class="{'valid-feedback': isValidMessageInPhoneNumber, 'invalid-feedback': !isValidMessageInPhoneNumber}"
+                             v-text="messageInPhoneNumber"></div>
+                    </div>
 
-                <div class="d-flex justify-content-center">
-                    <button class="px-3 py-2 btn btn-success rounded-3"
-                            type="button"
-                            name="add_new_contact"
-                            tabindex="4"
-                            :disabled="areInvalidContactFields"
-                            @click="addContact">
-                        Add contact
-                    </button>
+                    <div class="d-flex justify-content-center">
+                        <button class="px-3 py-2 btn btn-success rounded-3"
+                                type="button"
+                                name="add_new_contact"
+                                tabindex="4"
+                                :disabled="areInvalidContactFields"
+                                @click="addContact">
+                            Add contact
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -76,7 +78,7 @@
                     @click="showModalDialogForDeletingContacts(selectedContactsIds)">
                 <i class="bi bi-trash fs-4"></i>
                 <span class="position-absolute py-0 top-0 start-50 translate-middle badge rounded-pill bg-dark"
-                      v-text="selectedRowsCount">
+                      v-text="selectedContactsCount">
                 </span>
             </button>
 
@@ -113,7 +115,7 @@
                     <th class="p-1" scope="col">Last name</th>
                     <th class="p-1" scope="col">First name</th>
                     <th class="p-1" scope="col">Phone number</th>
-                    <th class="p-0 col-2" scope="col"></th>
+                    <th class="p-0 px-4" scope="col"></th>
                 </tr>
             </thead>
             <tbody class="align-middle table-group-divider">
@@ -125,7 +127,7 @@
                     </td>
                 </tr>
 
-                <tr v-if="!hasContacts && filterText !== ''">
+                <tr v-else-if="!hasContacts && filterText !== ''">
                     <td colspan="6">
                         <div class="fs-4 text-danger text-center">
                             <i class="bi bi-emoji-frown"></i> Nothing found! <i class="bi bi-emoji-frown"></i>
@@ -133,7 +135,7 @@
                     </td>
                 </tr>
 
-                <tr v-for="(contact, index) in contacts"
+                <tr v-else v-for="(contact, index) in contacts"
                     :key="contact.id">
                     <td class="p-1 text-center">
                         <input class="form-check-input"
@@ -327,16 +329,16 @@
                     || !this.isValidMessageInPhoneNumber;
             },
 
-            selectedRowsCount() {
+            selectedContactsCount() {
                 return this.selectedContactsIds.length;
             },
 
             disableDeleteContactsButton() {
-                return this.selectedRowsCount === 0;
+                return this.selectedContactsCount === 0;
             },
 
             isCheckedGeneralCheckBox() {
-                return this.contacts.length > 0 && this.selectedRowsCount === this.contacts.length;
+                return this.contacts.length > 0 && this.selectedContactsCount === this.contacts.length;
             },
 
             contactsToDelete() {
