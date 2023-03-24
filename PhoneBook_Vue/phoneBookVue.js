@@ -86,22 +86,16 @@
                 || !this.isValidMessageInPhoneNumber;
         },
 
-        selectedContacts: function () {
-            return this.filteredContacts.filter(function (contact) {
-                return contact.isChecked;
-            });
-        },
-
-        selectedRowsCount: function () {
+        selectedContactsCount: function () {
             return this.selectedContacts.length;
         },
 
         disableDeleteContactsButton: function () {
-            return this.selectedRowsCount === 0;
+            return this.selectedContactsCount === 0;
         },
 
         isCheckedGeneralCheckBox: function () {
-            return this.filteredContacts.length > 0 && this.selectedRowsCount === this.filteredContacts.length;
+            return this.filteredContacts.length > 0 && this.selectedContactsCount === this.filteredContacts.length;
         },
 
         filteredContacts: function () {
@@ -118,8 +112,18 @@
             });
         },
 
+        selectedContacts: function () {
+            return this.filteredContacts.filter(function (contact) {
+                return contact.isChecked;
+            });
+        },
+
         hasFilteredContacts: function () {
             return this.filteredContacts.length > 0;
+        },
+
+        disableGeneralCheckBox: function () {
+            return !this.hasContacts || !this.hasFilteredContacts;
         }
     },
 
@@ -198,11 +202,9 @@
             var self = this;
 
             this.contacts = this.contacts.filter(function (contact) {
-                var foundContactToDelete = self.contactsToDelete.find(function (contactToDelete) {
-                    return contactToDelete.id === contact.id;
-                });
-
-                return typeof foundContactToDelete === "undefined";
+                return !self.contactsToDelete.map(function (contactToDelete) {
+                    return contactToDelete.id;
+                }).includes(contact.id);
             });
 
             this.contactsToDelete = [];
