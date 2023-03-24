@@ -112,16 +112,16 @@ var rootComponent = new Vue({
                 || !this.isValidMessageInPhoneNumber;
         },
 
-        selectedRowsCount: function () {
+        selectedContactsCount: function () {
             return this.selectedContactsIds.length;
         },
 
         disableDeleteContactsButton: function () {
-            return this.selectedRowsCount === 0;
+            return this.selectedContactsCount === 0;
         },
 
         isCheckedGeneralCheckBox: function () {
-            return this.contacts.length > 0 && this.selectedRowsCount === this.contacts.length;
+            return this.contacts.length > 0 && this.selectedContactsCount === this.contacts.length;
         },
 
         contactsToDelete: function () {
