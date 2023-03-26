@@ -188,8 +188,6 @@ var rootComponent = new Vue({
 
             this.service.getContacts(this.filterText).done(function (contacts) {
                 self.contacts = contacts;
-
-
             }).fail(function () {
                 self.contacts = [];
             });
@@ -244,6 +242,7 @@ var rootComponent = new Vue({
 
                     return;
                 }
+
                 self.loadContacts();
 
                 self.firstName = "";
