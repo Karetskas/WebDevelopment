@@ -390,7 +390,11 @@
             loadContacts() {
                 this.service.getContacts(this.filterText)
                     .done(contacts => this.contacts = contacts)
-                    .fail(() => this.contacts = []);
+                    .fail(() => {
+                        this.contacts = [];
+
+                        this.showModalDialogForServerMessage("Failed to load contacts.")
+                    });
             },
 
             writeMessage(fieldType, errorMessage) {
@@ -441,6 +445,7 @@
 
                             return;
                         }
+
                         this.loadContacts();
 
                         this.firstName = "";
@@ -449,7 +454,7 @@
 
                         this.setFocusToFirstName();
                     })
-                    .fail(() => this.showModalDialogForServerMessage("Failed to load contacts."));
+                    .fail(() => this.showModalDialogForServerMessage("Failed to add to contact list."));
             },
 
             showModalDialogForDeletingContacts(contacts) {

@@ -1,6 +1,6 @@
 ﻿import Vue from "vue";
 
-import PhoneBook from "./phoneBookVueServer.vue";
+import PhoneBook from "./PhoneBookVueServer.vue";
 
 new Vue({
     render: h => h(PhoneBook)

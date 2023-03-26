@@ -82,7 +82,7 @@ router.post("/api/addContact", (req, res) => {
                     return;
                 }
 
-                if (contacts.some(currentContact => currentContact.phoneNumber === contact["phoneNumber"])) {
+                if (contacts.some(currentContact => currentContact.phoneNumber === contact.phoneNumber)) {
                     res.send({
                         success: false,
                         fieldType: key,
