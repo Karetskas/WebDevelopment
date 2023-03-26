@@ -5,13 +5,13 @@ let contacts = [];
 let nextContactId = 1;
 
 router.get("/api/getContacts", (req, res) => {
-    const textToFilter = (req.query.term || "").trim().toLowerCase();
+    const filterText = (req.query.term || "").trim().toLowerCase();
 
-    const filteredContacts = textToFilter.length === 0
+    const filteredContacts = filterText.length === 0
         ? contacts
-        : contacts.filter(contact => contact.firstName.toLowerCase().includes(textToFilter)
-            || contact.lastName.toLowerCase().includes(textToFilter)
-            || contact.phoneNumber.toLowerCase().includes(textToFilter));
+        : contacts.filter(contact => contact.firstName.toLowerCase().includes(filterText)
+            || contact.lastName.toLowerCase().includes(filterText)
+            || contact.phoneNumber.toLowerCase().includes(filterText));
 
     res.send(filteredContacts);
 });

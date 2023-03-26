@@ -393,7 +393,7 @@
                     .fail(() => {
                         this.contacts = [];
 
-                        this.showModalDialogForServerMessage("Failed to load contacts.")
+                        this.showModalDialogForServerMessage("Failed to load contacts.");
                     });
             },
 
