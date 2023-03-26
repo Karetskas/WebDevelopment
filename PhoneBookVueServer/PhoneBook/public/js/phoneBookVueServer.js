@@ -190,6 +190,8 @@ var rootComponent = new Vue({
                 self.contacts = contacts;
             }).fail(function () {
                 self.contacts = [];
+
+                this.showModalDialogForServerMessage("Failed to load contacts.");
             });
         },
 
@@ -251,7 +253,7 @@ var rootComponent = new Vue({
 
                 self.setFocusToFirstName();
             }).fail(function () {
-                self.showModalDialogForServerMessage("Failed to load contacts.");
+                self.showModalDialogForServerMessage("Failed to add to contact list.");
             });
         },
 

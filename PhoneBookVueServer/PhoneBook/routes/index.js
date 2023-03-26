@@ -9,16 +9,16 @@ var contacts = [];
 var nextContactId = 1;
 
 router.get("/api/getContacts", function (req, res) {
-    var textToFilter = (req.query.term || "").trim().toLowerCase();
+    var filterText = (req.query.term || "").trim().toLowerCase();
 
-    console.log(textToFilter);
+    console.log(filterText);
 
-    var filteredContacts = textToFilter.length === 0
+    var filteredContacts = filterText.length === 0
         ? contacts
         : contacts.filter(function (contact) {
-            return contact.firstName.toLowerCase().includes(textToFilter)
-                || contact.lastName.toLowerCase().includes(textToFilter)
-                || contact.phoneNumber.toLowerCase().includes(textToFilter);
+            return contact.firstName.toLowerCase().includes(filterText)
+                || contact.lastName.toLowerCase().includes(filterText)
+                || contact.phoneNumber.toLowerCase().includes(filterText);
         });
 
     res.send(filteredContacts);
@@ -91,7 +91,7 @@ router.post("/api/addContact", function (req, res) {
                 }
 
                 if (contacts.some(function (currentContact) {
-                    return currentContact.phoneNumber === contact["phoneNumber"];
+                    return currentContact.phoneNumber === contact.phoneNumber;
                 })) {
                     res.send({
                         success: false,
