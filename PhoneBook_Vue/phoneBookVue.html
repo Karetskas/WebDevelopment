@@ -120,7 +120,7 @@
                                type="checkbox"
                                name="mark_subscriber"
                                title="Select or deselect all rows"
-                               :disabled="disableGeneralCheckBox"
+                               :disabled="!this.hasFilteredContacts"
                                :checked="isCheckedGeneralCheckBox"
                                @change="changeAllCheckBoxes" />
                     </th>
@@ -140,7 +140,7 @@
                     </td>
                 </tr>
 
-                <tr v-else-if="!hasFilteredContacts && hasContacts">
+                <tr v-else-if="!hasFilteredContacts">
                     <td colspan="6">
                         <div class="fs-4 text-danger text-center">
                             <i class="bi bi-emoji-frown"></i> Nothing found! <i class="bi bi-emoji-frown"></i>
